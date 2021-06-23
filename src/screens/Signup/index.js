@@ -1,21 +1,44 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { Input, Text, RoundButton } from '../../components';
+import { Input, Text, RoundButton,BackButton } from '../../components';
 import { EMAIL_IMG, PERSON_IMG, BACKGROUND_ONE_IMG, PASSWORD_IMG } from '../../../res/drawables';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-
+import { sigupRequest } from '../../services/LoginServices';
 const SignUpScreen = (props) => {
     const [firstName, setFirstName] = useState(null)
     const [lastName, setLastName] = useState(null)
+    const [username, setUsername] = useState(null)
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
     const [confirmPassword, setConfirmPassword] = useState(null)
     const [phoneNumber, setPhoneNumber] = useState(null)
-
     const scrollViewRef = useRef();
+
+    const onSignupPressed = async () => {
+        if (firstName && lastName && username && email && password && confirmPassword && phoneNumber) {
+            if (password == confirmPassword) {
+                let res = await sigupRequest({
+                    FirstName: firstName,
+                    LastName: lastName,
+                    UserName: username,
+                    Email: email,
+                    Password: password,
+                    ConfirmPassword: confirmPassword,
+                    PhoneNo: phoneNumber
+                })
+                alert(res.data)
+            } else {
+                alert('Password does not match')
+            }
+        } else {
+            alert('Kindly fill data in all fields!')
+        }
+    }
     return (
         <ImageBackground style={styles.container} source={BACKGROUND_ONE_IMG}>
-            <View style={{ height: '20%' }}></View>
+            <BackButton
+                onPress={() => props.navigation.goBack()}
+            />
             <KeyboardAwareScrollView
                 ref={scrollViewRef}
                 style={{ flex: 1 }}>
@@ -31,6 +54,12 @@ const SignUpScreen = (props) => {
                     placeholder={'Last Name'}
                     value={lastName}
                     onChangeText={text => setLastName(text)}
+                />
+                <Input
+                    icon={PERSON_IMG}
+                    placeholder={'User Name'}
+                    value={username}
+                    onChangeText={text => setUsername(text)}
                 />
                 <Input
                     icon={EMAIL_IMG}
@@ -56,7 +85,6 @@ const SignUpScreen = (props) => {
                     icon={PASSWORD_IMG}
                     placeholder={'Your Phone#'}
                     value={phoneNumber}
-                    secureTextEntry={true}
                     onChangeText={text => setPhoneNumber(text)}
                 />
                 <View style={{
@@ -66,7 +94,7 @@ const SignUpScreen = (props) => {
                 }}>
                     <Text>Sign Up</Text>
                     <RoundButton
-                        onPress={() => alert('pressed')}
+                        onPress={() => onSignupPressed()}
                     />
                 </View>
             </KeyboardAwareScrollView>
@@ -77,7 +105,8 @@ const SignUpScreen = (props) => {
 const styles = {
     container: {
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        padding:5
     }, text: {
         marginTop: 30,
         marginLeft: 20

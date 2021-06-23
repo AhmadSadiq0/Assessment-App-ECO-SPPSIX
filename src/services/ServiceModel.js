@@ -10,7 +10,7 @@ export const postRequest = async (url, payload) => {
         return { success: true, data: res.data };
     } catch (e) {
         console.log('requestError ===> ', e)
-        return { success: false, data: null };
+        return { success: false, data: e.response.data };
     }
 
 }

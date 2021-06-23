@@ -4,6 +4,7 @@ import Input from './input';
 import Text from './Text';
 import RoundButton from './RoundButton';
 import GridButton from './GridButton';
+import BackButton from './BackButton';
 
 export{
     PrimaryButton,
@@ -11,5 +12,6 @@ export{
     Input,
     Text,
     RoundButton,
-    GridButton
+    GridButton,
+    BackButton
 }

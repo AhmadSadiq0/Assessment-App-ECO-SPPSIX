@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
-import { Input, Text, RoundButton } from '../../components';
+import { Input, Text, RoundButton, BackButton } from '../../components';
 import { EMAIL_IMG, BLUE_COLOUR, BACKGROUND_ONE_IMG, PASSWORD_IMG } from '../../../res/drawables';
 import { loginRequest } from '../../services/LoginServices';
 const LoginScreen = (props) => {
@@ -20,7 +20,9 @@ const LoginScreen = (props) => {
     }
     return (
         <ImageBackground style={styles.container} source={BACKGROUND_ONE_IMG}>
-            <View></View>
+            <BackButton
+                onPress={() => props.navigation.goBack()}
+            />
             <View>
                 <Text style={styles.text}>Welcome Back!</Text>
                 <Input
@@ -54,7 +56,8 @@ const LoginScreen = (props) => {
 const styles = {
     container: {
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        padding:5
     }, text: {
         marginLeft: 20
     }

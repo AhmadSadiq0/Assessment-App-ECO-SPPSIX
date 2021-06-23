@@ -12,3 +12,4 @@ export const BACKGROUND_ONE_IMG = require(`${PATH}/background_1.png`);
 export const ROUND_BTN_IMG = require(`${PATH}/roundButton.png`);
 export const ROUND_BTN_WHITE_IMG = require(`${PATH}/roundButton_white.png`);
 export const PERSON_IMG = require(`${PATH}/person.png`);
+export const BACK_IMG = require(`${PATH}/Back.png`);
