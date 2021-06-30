@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
-import { Input, Text, RoundButton, BackButton } from '../../components';
+import { Input, Text, RoundButton, BackButton,Heading } from '../../components';
 import { EMAIL_IMG, BLUE_COLOUR, BACKGROUND_ONE_IMG, PASSWORD_IMG } from '../../../res/drawables';
 import { loginRequest } from '../../services/LoginServices';
 const LoginScreen = (props) => {
@@ -11,7 +11,7 @@ const LoginScreen = (props) => {
         if (email && password) {
             let res = await loginRequest(email, password);
             if (res.success)
-                alert('Logged in')
+                props.navigation.navigate('SppsixLanding')
             else
                 alert('Incorrect username/password')
         } else {
@@ -19,7 +19,8 @@ const LoginScreen = (props) => {
         }
     }
     return (
-        <ImageBackground style={styles.container} source={BACKGROUND_ONE_IMG}>
+        <ImageBackground style={styles.container} 
+            source={BACKGROUND_ONE_IMG}>
             <BackButton
                 onPress={() => props.navigation.goBack()}
             />

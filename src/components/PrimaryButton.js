@@ -9,7 +9,8 @@ const PrimaryButton = (props) => {
             height: 55,
             backgroundColor: '#2E68B2',
             borderRadius: 20,
-            justifyContent: 'center'
+            justifyContent: 'center',
+            ...props.style
         }}
             onPress={() => props.onPress()}
         >
