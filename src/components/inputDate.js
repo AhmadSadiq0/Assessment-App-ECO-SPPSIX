@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{useRef} from 'react';
 import { View, TextInput, Image, Platform } from 'react-native';
 import { BLUE_COLOUR } from '../../res/drawables';
 import { TextInputMask } from 'react-native-masked-text';
 
 const InputDate = (props) => {
+    const ref=useRef() ;
     return (
         <View style={{
             flexDirection: 'row',
@@ -14,6 +15,7 @@ const InputDate = (props) => {
 
             <Image style={{ height: 20, width: 20 }} resizeMode={"contain"} source={props.icon} />
             <TextInputMask
+                ref={ref}
                 style={
                     Platform.OS == 'ios' ?
                         { color: BLUE_COLOUR, padding: 3, width: '70%' } :
@@ -25,9 +27,9 @@ const InputDate = (props) => {
                 }}
                 placeholder={'Date of birth DD/MM/YYYY'}
                 placeholderTextColor={BLUE_COLOUR}
-                onChangeText={text => props.onChangeText(text)}
+                onChangeText={text => props.onChangeText(text,ref)}
                 value={props.value}
-                onChangeText={text => props.onChangeText(text)}
+                
             />
         </View>
 

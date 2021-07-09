@@ -8,6 +8,7 @@ import BackButton from './BackButton';
 import Heading from './Heading';
 import InputDate from './inputDate';
 import OptionsText from './OptionsText';
+import Cover from './Cover';
 export {
     PrimaryButton,
     SecondaryButton,
@@ -18,5 +19,6 @@ export {
     BackButton,
     Heading,
     InputDate,
-    OptionsText
+    OptionsText,
+    Cover
 }

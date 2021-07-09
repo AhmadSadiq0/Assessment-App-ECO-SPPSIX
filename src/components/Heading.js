@@ -7,6 +7,7 @@ const Heading = (props) => {
     return (
         <View
             style={{
+                height:80,
                 alignSelf:'center',
                 width: '70%',
                 ...props.style,

@@ -7,10 +7,10 @@ const Input = (props) => {
             flexDirection: 'row',
             borderBottomColor: BLUE_COLOUR,
             borderBottomWidth: 2,
-            marginTop: 20,marginBottom:20, padding: 10
+            marginTop: 20, marginBottom: 20, padding: 10
         }}>
 
-            <Image style={{ height: 20, width: 20 }} resizeMode={"contain"} source={props.icon} />
+            <Image style={Platform.OS == 'ios' ? { height: 20, width: 20 } : { height: 20, width: 20, marginTop: 12 }} resizeMode={"contain"} source={props.icon} />
             <TextInput
                 style={
                     Platform.OS == 'ios' ?
