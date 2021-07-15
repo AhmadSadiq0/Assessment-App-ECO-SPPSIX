@@ -75,16 +75,16 @@ const Questionnaire = (props) => {
                 alert(32)
             else if (inOtherLocation)
                 alert(33)
-        }else{
-            if(specialEducationProgram && separateClass){
+        } else {
+            if (specialEducationProgram && separateClass) {
                 alert(23)
-            }else if(specialEducationProgram && separateSchool){
+            } else if (specialEducationProgram && separateSchool) {
                 alert(24)
-            }else if(specialEducationProgram && resdentialFacility){
+            } else if (specialEducationProgram && resdentialFacility) {
                 alert(25)
-            } if(!specialEducationProgram && homeEducation){
+            } if (!specialEducationProgram && homeEducation) {
                 alert(26)
-            }else if(!specialEducationProgram && !homeEducation){
+            } else if (!specialEducationProgram && !homeEducation) {
                 alert(27)
             }
         }
@@ -95,11 +95,11 @@ const Questionnaire = (props) => {
             <BackButton
                 onPress={() => props.navigation.goBack()}
             />
+            <Heading >{'EE SPP 6 \nDecision Tree'}</Heading>
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Heading style={{ height: 80, marginBottom: 10 }}>{'EE SPP 6 \n Decision Tree'}</Heading>
                 <OptionsText
                     text={'Does the child attend regular early childhood program?'}
                     title1={"Yes"}
@@ -118,7 +118,7 @@ const Questionnaire = (props) => {
                     title2={"In someother \n location"}
                     onPress={(btnNum) => onMajorityHoursEducationAndServicesResponse(btnNum)}
                 /> : null}
-                {earlyChildhoodPrg==false ?
+                {earlyChildhoodPrg == false ?
                     <OptionsText
                         text={'Is the child attending special education program'}
                         title1={"Yes"}
@@ -133,13 +133,13 @@ const Questionnaire = (props) => {
                         thirdButton={true}
                         onPress={(btnNum) => onSpecialEducationIn(btnNum)}
                     /> : null}
-                {specialEducationProgram==false  ? 
-                <OptionsText
-                    text={'Is the child receiving the majority of special education and related services in the residence of the child’s family or care giver?'}
-                    title1={"Yes"}
-                    title2={"No"}
-                    onPress={(btnNum) => onHomeEducationResponse(btnNum)}
-                /> : null}
+                {specialEducationProgram == false ?
+                    <OptionsText
+                        text={'Is the child receiving the majority of special education and related services in the residence of the child’s family or care giver?'}
+                        title1={"Yes"}
+                        title2={"No"}
+                        onPress={(btnNum) => onHomeEducationResponse(btnNum)}
+                    /> : null}
 
             </KeyboardAwareScrollView>
 
@@ -159,7 +159,7 @@ const styles = {
         justifyContent: 'space-between',
         padding: 5
     }, innerContainer: {
-        flex: 1, marginTop: 100, padding: 20
+        flex: 1, padding: 20
     }, text: {
         marginLeft: 20
     }

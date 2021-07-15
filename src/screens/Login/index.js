@@ -28,13 +28,13 @@ const LoginScreen = (props) => {
                 <Text style={styles.text}>Welcome Back!</Text>
                 <Input
                     icon={EMAIL_IMG}
-                    placeholder={'Your email'}
+                    placeholder={'Your Username'}
                     value={email}
                     onChangeText={text => setEmail(text)}
                 />
                 <Input
                     icon={PASSWORD_IMG}
-                    placeholder={'Your password'}
+                    placeholder={'Your Password'}
                     value={password}
                     secureTextEntry={true}
                     onChangeText={text => setPassword(text)}
