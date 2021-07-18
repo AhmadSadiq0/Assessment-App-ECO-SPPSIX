@@ -1,21 +1,26 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
 import { BACKGROUND_ONE_IMG } from '../../../res/drawables';
 import { EC_SPPSIX, ECO_TOOL } from '../../../res/strings';
 import { GridButton, Text, BackButton } from '../../components';
 import { _storeBaseUrl } from '../../localStorage';
 import { moveToScreen } from '../../functions';
+import { Context as AuthContext } from '../../store/context/AuthContext';
+
 const ToolSelectionScreen = (props) => {
     const { type } = props.route.params;
     const { navigation } = props;
+    const { clearAuth } = useContext(AuthContext);
 
     const onEcoPressed = () => {
+        clearAuth()
         _storeBaseUrl(ECO_TOOL)
-        type == 'Login' ? moveToScreen(navigation, 'Login') : moveToScreen(navigation, 'Signup')
+        type == 'Login' ? moveToScreen(navigation, 'Login', { tool: 'ECO' }) : moveToScreen(navigation, 'Signup', { tool: 'ECO' })
     }
     const onSppsixPressed = () => {
+        clearAuth()
         _storeBaseUrl(EC_SPPSIX)
-        type == 'Login' ? moveToScreen(navigation, 'Login') : moveToScreen(navigation, 'Signup')
+        type == 'Login' ? moveToScreen(navigation, 'Login', { tool: 'SPSIX' }) : moveToScreen(navigation, 'Signup', { tool: 'SPSIX' })
     }
     return (
         <ImageBackground
@@ -47,7 +52,7 @@ const ToolSelectionScreen = (props) => {
 const styles = {
     container: {
         flex: 1,
-        padding:5
+        padding: 5
     }, innerContainer: {
         margin: 20,
         marginTop: 130

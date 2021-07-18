@@ -3,6 +3,7 @@ import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
 import { BackButton, Heading, Text, RoundButton, OptionsText, PrimaryButton } from '../../../components';
 import { BACKGROUND_ONE_IMG, } from '../../../../res/drawables';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 const Questionnaire = (props) => {
     const scrollViewRef = useRef();
@@ -64,30 +65,34 @@ const Questionnaire = (props) => {
         btnNum == 1 ? setHomeEduaction(true) : setHomeEduaction(false)
     }
 
-    const onGetCodePressed = () => {
+    const onSubmitPressed = () => {
+        alert('Submitted')
+    }
+    const getRating = () => {
         if (earlyChildhoodPrg && atleast10hoursPerWeek) {
             if (regularChildhoodProgram)
-                alert(30)
+                return 30
             else if (inOtherLocation)
-                alert(31)
+                return 31
         } else if (earlyChildhoodPrg && lessthan10hoursPerWeek) {
             if (regularChildhoodProgram)
-                alert(32)
+                return 32
             else if (inOtherLocation)
-                alert(33)
+                return 33
         } else {
             if (specialEducationProgram && separateClass) {
-                alert(23)
+                return 23
             } else if (specialEducationProgram && separateSchool) {
-                alert(24)
+                return 24
             } else if (specialEducationProgram && resdentialFacility) {
-                alert(25)
-            } if (!specialEducationProgram && homeEducation) {
-                alert(26)
-            } else if (!specialEducationProgram && !homeEducation) {
-                alert(27)
+                return 25
+            } if (specialEducationProgram==false && homeEducation) {
+                return 26
+            } else if (specialEducationProgram == false && homeEducation == false) {
+                return 27
             }
         }
+        return null
     }
     return (
         <ImageBackground style={styles.container}
@@ -142,11 +147,11 @@ const Questionnaire = (props) => {
                     /> : null}
 
             </KeyboardAwareScrollView>
-
+            {getRating() ? <Text>{`Rating is = ${getRating()}`}</Text> : null}
             <PrimaryButton
                 style={{ alignSelf: 'center' }}
-                title={'Get code'}
-                onPress={() => onGetCodePressed()}
+                title={'Submit'}
+                onPress={() => onSubmitPressed()}
             />
 
         </ImageBackground>

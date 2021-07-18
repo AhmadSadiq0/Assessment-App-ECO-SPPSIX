@@ -7,7 +7,6 @@ export const loginRequest = async (username, password) => {
 
     let res = await postRequest(baseUrl + LOGIN + `LoginName=${username}&LoginPwd=${password}`);
     console.log(res)
-
     if (res.success)
         return ({ success: true, data: res.data })
     else

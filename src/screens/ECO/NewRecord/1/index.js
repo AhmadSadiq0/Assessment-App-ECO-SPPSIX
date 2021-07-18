@@ -1,19 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ImageBackground, View, Dimensions } from 'react-native';
-import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../res/drawables';
-import { GENDER_VALUUES } from '../../../../res/strings';
+import { ImageBackground, View, Dimensions, ScrollView } from 'react-native';
+import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../../components';
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
+import { GENDER_VALUUES, ECO_HEADING } from '../../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { getDistricts } from '../../../services/GeneralServices';
-import { ScrollView } from 'react-native-gesture-handler';
-import { checkDate } from '../../../functions';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { getDistricts } from '../../../../services/GeneralServices';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import { checkDate } from '../../../../functions';
+
 const LandingSppSix = (props) => {
-    const [studentInitials, setStudentInitials] = useState(null)
+    const [lastName, setLastName] = useState(null)
+    const [firstName, setFirstName] = useState(null)
     const [gender, setGender] = useState(null)
     const [dob, setDob] = useState(null)
     const [districtsList, setDistrictsList] = useState([])
     const [district, setDistrict] = useState(null)
+    const [school, setSchool] = useState(null)
+    const [sisId, setSisId] = useState(null)
 
     const [open, setOpen] = useState(false);
     const [openDistrict, setOpenDistrict] = useState(false);
@@ -32,14 +35,16 @@ const LandingSppSix = (props) => {
     }
     const onNextPressed = () => {
         console.log(bdateRef)
-        if (studentInitials && gender && dob && district) {
+        if (firstName && lastName && gender && dob && district) {
             if (checkDate(dob)) {
-                props.navigation.navigate('SppsixQuestionnaire', {
+                props.navigation.navigate('EcoNew2', {
                     data: {
-                        StudentInitial: studentInitials,
+                        Name: firstName + ' ' + lastName,
                         Gender: gender,
                         DOB: dob,
-                        District: district
+                        District: district,
+                        School: school,
+                        S_ID: sisId
                     }
                 })
             } else {
@@ -56,20 +61,31 @@ const LandingSppSix = (props) => {
     return (
         <ImageBackground style={{
             flex: 1,
+            justifyContent: 'space-between'
         }} source={BACKGROUND_ONE_IMG}>
-            <BackButton
-                onPress={() => props.navigation.goBack()}
-            />
-             <KeyboardAwareScrollView
+            <View>
+                <BackButton
+                    onPress={() => props.navigation.goBack()}
+                />
+                <Heading >{ECO_HEADING}</Heading>
+            </View>
+            <ScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Heading >{'EE SPP 6 \nDecision Tree'}</Heading>
+                <Text style={styles.title}>I.Child's Information</Text>
+
                 <Input
-                    placeholder={'Stundent Initials'}
-                    value={studentInitials}
-                    onChangeText={text => setStudentInitials(text)}
+                    placeholder={'Last name*'}
+                    value={lastName}
+                    onChangeText={text => setLastName(text)}
                 />
+                <Input
+                    placeholder={'First name*'}
+                    value={firstName}
+                    onChangeText={text => setFirstName(text)}
+                />
+
 
                 <DropDownPicker
                     open={open}
@@ -77,16 +93,26 @@ const LandingSppSix = (props) => {
                     items={GENDER_VALUUES}
                     setOpen={setOpen}
                     setValue={setGender}
-                    placeholder="Gender"
+                    placeholder="Gender*"
                     textStyle={{ color: WHITE_COLOUR }}
                     style={{ backgroundColor: BLUE_COLOUR }}
                     dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
                 />
                 <InputDate
                     ref={bdateRef}
-                    placeholder={'Date of birth DD/MM/YYYY'}
+                    placeholder={'Date of birth DD/MM/YYYY*'}
                     value={dob}
                     onChangeText={(text, ref) => handleDob(text, ref)}
+                />
+                <Input
+                    placeholder={'School*'}
+                    value={school}
+                    onChangeText={text => setSchool(text)}
+                />
+                <Input
+                    placeholder={'SIS ID'}
+                    value={sisId}
+                    onChangeText={text => setSisId(text)}
                 />
                 <DropDownPicker
                     loading={!districtsList.length}
@@ -95,18 +121,16 @@ const LandingSppSix = (props) => {
                     items={districtsList}
                     setOpen={setOpenDistrict}
                     setValue={setDistrict}
-                    placeholder="District"
+                    placeholder="District*"
                     listMode="SCROLLVIEW"
                     scrollViewProps={{
                         nestedScrollEnabled: true,
                     }}
                     textStyle={{ color: WHITE_COLOUR }}
-                    style={{ backgroundColor: BLUE_COLOUR }}
+                    style={{ backgroundColor: BLUE_COLOUR, flex: 1 }}
                     dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
                 />
-                
-            </KeyboardAwareScrollView>
-            
+            </ScrollView>
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -123,15 +147,18 @@ const LandingSppSix = (props) => {
 }
 const styles = {
     container: {
-        flex:1,
+        flex: 1,
+        justifyContent: 'space-between',
         padding: 5
     }, innerContainer: {
-        flex:1,
-        padding: 20,
+        padding: 20
     }
     , text: {
         marginTop: 30,
         marginLeft: 20
+    }, title: {
+        alignSelf: 'center',
+        marginTop: 20
     }
 }
 export default LandingSppSix;

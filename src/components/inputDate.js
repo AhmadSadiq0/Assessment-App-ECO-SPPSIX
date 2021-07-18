@@ -25,7 +25,7 @@ const InputDate = (props) => {
                 options={{
                     format: 'DD/MM/YYYY'
                 }}
-                placeholder={'Date of birth DD/MM/YYYY'}
+                placeholder={props.placeholder}
                 placeholderTextColor={BLUE_COLOUR}
                 onChangeText={text => props.onChangeText(text,ref)}
                 value={props.value}

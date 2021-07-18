@@ -1,5 +1,5 @@
-export const moveToScreen = (navigation, screenName) => {
-    navigation.navigate(screenName)
+export const moveToScreen = (navigation, screenName, payload) => {
+    navigation.navigate(screenName, payload)
 }
 
 export const checkDate = (input) => {

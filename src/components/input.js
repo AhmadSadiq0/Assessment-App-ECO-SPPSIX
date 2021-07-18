@@ -23,6 +23,7 @@ const Input = (props) => {
                 secureTextEntry={props.secureTextEntry}
                 placeholderTextColor={BLUE_COLOUR}
                 onChangeText={text => props.onChangeText(text)}
+                editable={props.editable}
             />
         </View>
 

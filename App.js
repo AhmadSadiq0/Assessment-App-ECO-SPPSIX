@@ -24,14 +24,17 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Navigation from './src/navigation';
+import { Provider as AuthProvider } from './src/store/context/AuthContext';
 
 const App: () => React$Node = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{flex:1}}>
-        <Navigation />
-      </SafeAreaView>
+      <AuthProvider>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView style={{ flex: 1 }}>
+          <Navigation />
+        </SafeAreaView>
+      </AuthProvider>
     </>
   );
 };

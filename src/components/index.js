@@ -9,6 +9,13 @@ import Heading from './Heading';
 import InputDate from './inputDate';
 import OptionsText from './OptionsText';
 import Cover from './Cover';
+import Error from './Error';
+import Button from './Button';
+import ButtonRadio from './ButtonRadio';
+import List from './List';
+import InputBox from './inputBox';
+
+
 export {
     PrimaryButton,
     SecondaryButton,
@@ -20,5 +27,10 @@ export {
     Heading,
     InputDate,
     OptionsText,
-    Cover
+    Cover,
+    Error,
+    Button,
+    List,
+    ButtonRadio,
+    InputBox
 }

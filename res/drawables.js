@@ -3,6 +3,7 @@ const PATH = '../assets/images';
 export const BLUE_COLOUR='#2E68B2' ;
 export const YELLOW_COLOUR='#FCCA67' ;
 export const WHITE_COLOUR='#ffffff' ;
+export const LIGHT_BLUE_COLOUR='#E6E8FA' ;
 
 
 export const BACKGROUND_IMG = require(`${PATH}/background.png`);

@@ -1,25 +1,30 @@
-import React, { useState, useRef } from 'react';
-import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
-import { Input, Text, RoundButton, BackButton,Heading } from '../../components';
+import React, { useState, useContext, useEffect } from 'react';
+import { ImageBackground, View, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
+import { Input, Text, RoundButton, BackButton, Heading, Error } from '../../components';
 import { EMAIL_IMG, BLUE_COLOUR, BACKGROUND_ONE_IMG, PASSWORD_IMG } from '../../../res/drawables';
-import { loginRequest } from '../../services/LoginServices';
+import { Context as AuthContext } from '../../store/context/AuthContext';
+import { ECO, SPSIX } from '../../../res/strings';
 const LoginScreen = (props) => {
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
+    const { state: auth, signIn } = useContext(AuthContext);
+    const { user, error, tool, loading } = auth;
+
+    useEffect(() => {
+        if (props.route.params.tool == SPSIX && user)
+            props.navigation.navigate('SppsixLanding')
+        else if (props.route.params.tool == ECO && user)
+            props.navigation.navigate('EcoLanding')
+    }, [user])
+
 
     const onLoginPressed = async () => {
         if (email && password) {
-            let res = await loginRequest(email, password);
-            if (res.success)
-                props.navigation.navigate('SppsixLanding')
-            else
-                alert('Incorrect username/password')
-        } else {
-            alert('Kindly enter username and password')
+            await signIn(email, password, props.route.params.tool);
         }
     }
     return (
-        <ImageBackground style={styles.container} 
+        <ImageBackground style={styles.container}
             source={BACKGROUND_ONE_IMG}>
             <BackButton
                 onPress={() => props.navigation.goBack()}
@@ -39,7 +44,10 @@ const LoginScreen = (props) => {
                     secureTextEntry={true}
                     onChangeText={text => setPassword(text)}
                 />
+                <ActivityIndicator animating={true} style={{ opacity: loading ? 1.0 : 0.0, margin: 5 }} color={BLUE_COLOUR} />
+                {error ? <Error>{error}</Error> : null}
             </View>
+
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -58,7 +66,7 @@ const styles = {
     container: {
         flex: 1,
         justifyContent: 'space-between',
-        padding:5
+        padding: 5
     }, text: {
         marginLeft: 20
     }
