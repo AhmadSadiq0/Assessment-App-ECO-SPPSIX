@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ImageBackground, View, Dimensions } from 'react-native';
+import { ImageBackground, View, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../components';
 import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../res/drawables';
 import { GENDER_VALUUES } from '../../../../res/strings';
@@ -55,13 +55,15 @@ const LandingSppSix = (props) => {
 
     return (
         <ImageBackground style={{
+            flex: 1,
             height: Dimensions.get('window').height
         }} source={BACKGROUND_ONE_IMG}>
             <BackButton
                 onPress={() => props.navigation.goBack()}
             />
-            <ScrollView
-                contentContainerStyle={styles.innerContainer}
+            <KeyboardAvoidingView
+                behavior={'position'}
+                style={styles.innerContainer}
                 ref={scrollViewRef}
             >
                 <Heading >{'EE SPP 6 \nDecision Tree'}</Heading>
@@ -104,12 +106,12 @@ const LandingSppSix = (props) => {
                     style={{ backgroundColor: BLUE_COLOUR }}
                     dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
                 />
-            </ScrollView>
+
+            </KeyboardAvoidingView>
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                margin: 25,
-               
+                margin: 20
             }}>
                 <Text>Next</Text>
                 <RoundButton
@@ -125,7 +127,6 @@ const styles = {
         flex: 1,
         padding: 5
     }, innerContainer: {
-        height: Dimensions.get('window').height,
         padding: 20,
     }
     , text: {
