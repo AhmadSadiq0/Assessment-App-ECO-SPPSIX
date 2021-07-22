@@ -7,7 +7,7 @@ const RoundButton = (props) => {
         <TouchableOpacity
             onPress={() => props.onPress()}
         >
-            <Image style={{ width: 40, height: 40 }} source={ROUND_BTN_IMG} />
+            <Image style={{ width: 40, height: 40, ...props.style }} source={ROUND_BTN_IMG} />
 
         </TouchableOpacity>
     )

@@ -55,12 +55,12 @@ const LandingSppSix = (props) => {
 
     return (
         <ImageBackground style={{
-            flex: 1,
+            height: Dimensions.get('window').height
         }} source={BACKGROUND_ONE_IMG}>
             <BackButton
                 onPress={() => props.navigation.goBack()}
             />
-             <KeyboardAwareScrollView
+            <ScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
@@ -104,13 +104,12 @@ const LandingSppSix = (props) => {
                     style={{ backgroundColor: BLUE_COLOUR }}
                     dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
                 />
-                
-            </KeyboardAwareScrollView>
-            
+            </ScrollView>
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                margin: 20
+                margin: 25,
+               
             }}>
                 <Text>Next</Text>
                 <RoundButton
@@ -123,10 +122,10 @@ const LandingSppSix = (props) => {
 }
 const styles = {
     container: {
-        flex:1,
+        flex: 1,
         padding: 5
     }, innerContainer: {
-        flex:1,
+        height: Dimensions.get('window').height,
         padding: 20,
     }
     , text: {
