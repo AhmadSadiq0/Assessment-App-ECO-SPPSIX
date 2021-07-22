@@ -56,7 +56,8 @@ const LandingSppSix = (props) => {
     return (
         <ImageBackground style={{
             flex: 1,
-            height: Dimensions.get('window').height
+            height: Dimensions.get('window').height,
+            justifyContent:'space-between'
         }} source={BACKGROUND_ONE_IMG}>
             <BackButton
                 onPress={() => props.navigation.goBack()}
