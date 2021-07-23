@@ -109,7 +109,7 @@ const LandingSppSix = (props) => {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    margin: 20
+                    margin: 50
                 }}>
                     {/* <Text>Next</Text> */}
                     <RoundButton
