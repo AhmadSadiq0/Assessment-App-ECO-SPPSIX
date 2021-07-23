@@ -59,17 +59,14 @@ const LandingSppSix = (props) => {
     }
 
     return (
-        <ImageBackground style={{
-            flex: 1,
-            justifyContent: 'space-between'
-        }} source={BACKGROUND_ONE_IMG}>
+        <ImageBackground style={styles.container} source={BACKGROUND_ONE_IMG}>
             <View>
                 <BackButton
                     onPress={() => props.navigation.goBack()}
                 />
                 <Heading >{ECO_HEADING}</Heading>
             </View>
-            <ScrollView
+            <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
@@ -130,17 +127,19 @@ const LandingSppSix = (props) => {
                     style={{ backgroundColor: BLUE_COLOUR, flex: 1 }}
                     dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
                 />
-            </ScrollView>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                margin: 20
-            }}>
-                <Text>Next</Text>
-                <RoundButton
-                    onPress={() => onNextPressed()}
-                />
-            </View>
+
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop:10
+                }}>
+                    <Text>Next</Text>
+                    <RoundButton
+                        onPress={() => onNextPressed()}
+                    />
+                </View>
+            </KeyboardAwareScrollView>
+
         </ImageBackground>
 
     )

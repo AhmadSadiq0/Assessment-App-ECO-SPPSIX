@@ -44,73 +44,73 @@ const ECO3 = (props) => {
     }
 
 
-return (
-    <ImageBackground style={{
-        flex: 1,
-        justifyContent: 'space-between'
-    }} source={BACKGROUND_ONE_IMG}>
-        <View>
-            <BackButton
-                onPress={() => props.navigation.goBack()}
-            />
-            <Heading >{ECO_HEADING}</Heading>
-        </View>
-        <KeyboardAwareScrollView
-            contentContainerStyle={styles.innerContainer}
-            ref={scrollViewRef}
-        >
-            <Text style={styles.title}>III. Person(s) Involved in Deciding Summary Ratings</Text>
+    return (
+        <ImageBackground style={{
+            flex: 1,
+            justifyContent: 'space-between'
+        }} source={BACKGROUND_ONE_IMG}>
+            <View>
+                <BackButton
+                    onPress={() => props.navigation.goBack()}
+                />
+                <Heading >{ECO_HEADING}</Heading>
+            </View>
+            <KeyboardAwareScrollView
+                contentContainerStyle={styles.innerContainer}
+                ref={scrollViewRef}
+            >
+                <Text style={styles.title}>III. Person(s) Involved in Deciding Summary Ratings</Text>
 
-            <Input
-                placeholder={'Last name*'}
-                value={lastName}
-                onChangeText={text => setLastName(text)}
-            />
-            <Input
-                placeholder={'First name*'}
-                value={firstName}
-                onChangeText={text => setFirstName(text)}
-            />
-            <Input
-                placeholder={'Middle name*'}
-                value={middleName}
-                onChangeText={text => setMiddleName(text)}
-            />
+                <Input
+                    placeholder={'Last name*'}
+                    value={lastName}
+                    onChangeText={text => setLastName(text)}
+                />
+                <Input
+                    placeholder={'First name*'}
+                    value={firstName}
+                    onChangeText={text => setFirstName(text)}
+                />
+                <Input
+                    placeholder={'Middle name*'}
+                    value={middleName}
+                    onChangeText={text => setMiddleName(text)}
+                />
 
 
-            <DropDownPicker
-                open={open}
-                value={role}
-                items={ROLE_LISTINGS_SUMMARY}
-                setOpen={setOpen}
-                setValue={setRole}
-                placeholder="Role*"
-                textStyle={{ color: WHITE_COLOUR }}
-                style={{ backgroundColor: BLUE_COLOUR }}
-                dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
-            />
-            <Button
-                title={'Add'}
-                onPress={() => onAddPressed()}
-            />
+                <DropDownPicker
+                    open={open}
+                    value={role}
+                    items={ROLE_LISTINGS_SUMMARY}
+                    setOpen={setOpen}
+                    setValue={setRole}
+                    placeholder="Role*"
+                    textStyle={{ color: WHITE_COLOUR }}
+                    style={{ backgroundColor: BLUE_COLOUR, marginBottom: 5 }}
+                    dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
+                />
+                <Button
+                    title={'Add'}
+                    onPress={() => onAddPressed()}
+                />
 
-            <List
-                data={users}
-            />
-        </KeyboardAwareScrollView>
-        <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            margin: 20
-        }}>
-            <Text>Next</Text>
-            <RoundButton
-                onPress={() => onNextPressed()}
-            />
-        </View>
-    </ImageBackground>
+                <List
+                    data={users}
+                />
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: 10
+                }}>
+                    <Text>Next</Text>
+                    <RoundButton
+                        onPress={() => onNextPressed()}
+                    />
+                </View>
+            </KeyboardAwareScrollView>
+        </ImageBackground>
 
-)
+    )
 }
 const styles = {
     container: {

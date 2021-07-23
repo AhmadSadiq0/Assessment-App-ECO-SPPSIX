@@ -195,17 +195,17 @@ const ECO5 = (props) => {
                     style={{ height: 40 }}
                     value={getSummary(calculateRating())}
                 />
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: 10
+                }}>
+                    <Text>Next</Text>
+                    <RoundButton
+                        onPress={() => onNextPressed()}
+                    />
+                </View>
             </KeyboardAwareScrollView>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                margin: 20
-            }}>
-                <Text>Next</Text>
-                <RoundButton
-                    onPress={() => onNextPressed()}
-                />
-            </View>
         </ImageBackground>
 
     )
