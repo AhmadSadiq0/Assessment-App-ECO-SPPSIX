@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ImageBackground, View, Dimensions, ScrollView } from 'react-native';
 import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../../components';
 import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { GENDER_VALUUES, ECO_HEADING } from '../../../../../res/strings';
+import { GENDER_VALUUES, GENERATE_RATINGS_HEADING } from '../../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { getDistricts } from '../../../../services/GeneralServices';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { checkDate } from '../../../../functions';
 
-const LandingSppSix = (props) => {
+const GenerateRatings1 = (props) => {
     const [lastName, setLastName] = useState(null)
     const [firstName, setFirstName] = useState(null)
     const [gender, setGender] = useState(null)
@@ -64,7 +64,7 @@ const LandingSppSix = (props) => {
                 <BackButton
                     onPress={() => props.navigation.goBack()}
                 />
-                <Heading >{ECO_HEADING}</Heading>
+                <Heading >{GENERATE_RATINGS_HEADING}</Heading>
             </View>
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
@@ -160,4 +160,4 @@ const styles = {
         marginTop: 20
     }
 }
-export default LandingSppSix;
+export default GenerateRatings1;

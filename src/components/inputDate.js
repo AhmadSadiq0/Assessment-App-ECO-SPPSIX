@@ -23,7 +23,7 @@ const InputDate = (props) => {
                 }
                 type={'datetime'}
                 options={{
-                    format: 'DD/MM/YYYY'
+                    format: 'MM/DD/YYYY'
                 }}
                 placeholder={props.placeholder}
                 placeholderTextColor={BLUE_COLOUR}

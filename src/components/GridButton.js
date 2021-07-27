@@ -16,7 +16,7 @@ const GridButton = (props) => {
             onPress={() => props.onPress()}
         >
             <Text style={{ color: '#ffffff' }}>{props.text}</Text>
-            <Image style={{ width: 30, height: 30, alignSelf: 'flex-end', marginTop: 20 }} source={ROUND_BTN_WHITE_IMG} />
+            <Image style={{ width: 30, height: 30, alignSelf: 'flex-end', margin: 5,position:'absolute',bottom:0 }} source={ROUND_BTN_WHITE_IMG} />
         </TouchableOpacity>
     )
 }

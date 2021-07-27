@@ -25,3 +25,5 @@ export const ECO = 'ECO';
 export const SPSIX = 'SPSIX';
 
 export const ECO_HEADING = 'Early Childhood Outcomes Ratings Decision Tree';
+
+export const GENERATE_RATINGS_HEADING = 'Generate ECO Ratings Only';

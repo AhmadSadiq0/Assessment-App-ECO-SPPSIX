@@ -86,7 +86,7 @@ const LandingSppSix = (props) => {
                 />
                 <InputDate
                     ref={bdateRef}
-                    placeholder={'Date of birth DD/MM/YYYY'}
+                    placeholder={'Date of birth MM/DD/YYYY'}
                     value={dob}
                     onChangeText={(text, ref) => handleDob(text, ref)}
                 />

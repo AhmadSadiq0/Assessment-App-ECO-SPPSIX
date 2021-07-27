@@ -21,6 +21,8 @@ import EcoNew6 from '../screens/ECO/NewRecord/6';
 import EcoNew7 from '../screens/ECO/NewRecord/7';
 import EcoNew8 from '../screens/ECO/NewRecord/8';
 
+
+import GenerateRatings1 from '../screens/ECO/GenerateRatings/1'
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -33,7 +35,9 @@ export default function App() {
                 <Stack.Screen name="Signup" component={SignupScreen} />
                 <Stack.Screen name="SppsixLanding" component={SppsixLanding} />
                 <Stack.Screen name="SppsixQuestionnaire" component={SppsixQuestionnaire} />
+               
                 <Stack.Screen name="EcoLanding" component={EcoLanding} />
+                
                 <Stack.Screen name="EcoNew1" component={EcoNew1} />
                 <Stack.Screen name="EcoNew2" component={EcoNew2} />
                 <Stack.Screen name="EcoNew3" component={EcoNew3} />
@@ -42,6 +46,9 @@ export default function App() {
                 <Stack.Screen name="EcoNew6" component={EcoNew6} />
                 <Stack.Screen name="EcoNew7" component={EcoNew7} />
                 <Stack.Screen name="EcoNew8" component={EcoNew8} />
+
+                <Stack.Screen name="EcoGenerateRatings1" component={GenerateRatings1} />
+
 
             </Stack.Navigator>
         </NavigationContainer>
