@@ -2,7 +2,7 @@ import React,{useContext} from 'react';
 import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
 import { BACKGROUND_ONE_IMG } from '../../../res/drawables';
 import { EC_SPPSIX, ECO_TOOL } from '../../../res/strings';
-import { GridButton, Text, BackButton } from '../../components';
+import { GridButton, Text, BackButton, Cover } from '../../components';
 import { _storeBaseUrl } from '../../localStorage';
 import { moveToScreen } from '../../functions';
 import { Context as AuthContext } from '../../store/context/AuthContext';
@@ -23,18 +23,18 @@ const ToolSelectionScreen = (props) => {
         type == 'Login' ? moveToScreen(navigation, 'Login', { tool: 'SPSIX' }) : moveToScreen(navigation, 'Signup', { tool: 'SPSIX' })
     }
     return (
-        <ImageBackground
+        <View
             style={styles.container}
-            source={BACKGROUND_ONE_IMG}
         >
-            <BackButton
-                onPress={() => props.navigation.goBack()}
+            <Cover
+                navigation={props.navigation}
             />
+        
             <View style={styles.innerContainer}>
                 <Text style={{ fontWeight: '300', marginBottom: 10 }} >Select the tool you would like to use:</Text>
                 <View>
                     <GridButton
-                        text={'EE SPP 6 Preschool Environments Decision Tree for Coding'}
+                        text={'Preschool Environments Decision Tree for Coding'}
                         onPress={() => onSppsixPressed()}
                     />
                     <GridButton
@@ -46,16 +46,14 @@ const ToolSelectionScreen = (props) => {
 
             </View>
             <View></View>
-        </ImageBackground>
+        </View>
     )
 }
 const styles = {
     container: {
         flex: 1,
-        padding: 5
     }, innerContainer: {
-        margin: 20,
-        marginTop: 130
+        padding:5
     }
 }
 export default ToolSelectionScreen;

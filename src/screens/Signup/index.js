@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { Input, Text, RoundButton,BackButton } from '../../components';
+import { Input, Text, RoundButton, BackButton, Cover } from '../../components';
 import { EMAIL_IMG, PERSON_IMG, BACKGROUND_ONE_IMG, PASSWORD_IMG } from '../../../res/drawables';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { sigupRequest } from '../../services/LoginServices';
@@ -35,9 +35,10 @@ const SignUpScreen = (props) => {
         }
     }
     return (
-        <ImageBackground style={styles.container} source={BACKGROUND_ONE_IMG}>
-            <BackButton
-                onPress={() => props.navigation.goBack()}
+        <View style={styles.container}>
+            <Cover
+                navigation={props.navigation}
+                heading={'Sign up'}
             />
             <KeyboardAwareScrollView
                 ref={scrollViewRef}
@@ -98,15 +99,13 @@ const SignUpScreen = (props) => {
                     />
                 </View>
             </KeyboardAwareScrollView>
-        </ImageBackground>
+        </View>
 
     )
 }
 const styles = {
     container: {
         flex: 1,
-        justifyContent: 'space-between',
-        padding:5
     }, text: {
         marginTop: 30,
         marginLeft: 20

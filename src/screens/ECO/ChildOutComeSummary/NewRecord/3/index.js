@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ImageBackground, View, Dimensions, Button } from 'react-native';
-import { Input, Text, RoundButton, BackButton, Heading, List } from '../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { ROLE_LISTINGS_SUMMARY, ECO_HEADING } from '../../../../../res/strings';
+import { Input, Text, RoundButton, BackButton, Heading, List, Cover } from '../../../../../components';
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../../res/drawables';
+import { ROLE_LISTINGS_SUMMARY, ECO_HEADING_NEW } from '../../../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
@@ -18,43 +18,46 @@ const ECO3 = (props) => {
     const scrollViewRef = useRef();
 
 
-    const data = props.route.params;
-
+    const {data} = props.route.params;
+    const { selectedParticipantsTypes } = data;
+    console.log(data)
 
     const onNextPressed = () => {
-        if (lastName && firstName && middleName && role || users.length > 0) {
+        if ( users.length > 1) {
             props.navigation.navigate('EcoNew4', {
+                data:{
                 ...data,
-                SummaryRating: users
+                SummaryRating: users}
             })
+        } else {
+            alert('Add atleast two persons who participated!')
+        }
+    }
+    const onAddPressed = () => {
+        if (lastName && firstName && middleName && role) {
+            let array = [...users];
+            let obj = {
+                lastname: lastName,
+                firstname: firstName,
+                middlename: middleName,
+                role: role
+            }
+            array.push(obj)
+            setUsers(array)
         } else {
             alert('Kindly enter data in all fields!')
         }
     }
-    const onAddPressed = () => {
-        let array = [...users];
-        let obj = {
-            lastname: lastName,
-            firstname: firstName,
-            middlename: middleName,
-            role: role
-        }
-        array.push(obj)
-        setUsers(array)
-    }
 
 
     return (
-        <ImageBackground style={{
+        <View style={{
             flex: 1,
-            justifyContent: 'space-between'
-        }} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{ECO_HEADING}</Heading>
-            </View>
+        }} >
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_NEW}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
@@ -81,7 +84,7 @@ const ECO3 = (props) => {
                 <DropDownPicker
                     open={open}
                     value={role}
-                    items={ROLE_LISTINGS_SUMMARY}
+                    items={selectedParticipantsTypes}
                     setOpen={setOpen}
                     setValue={setRole}
                     placeholder="Role*"
@@ -108,7 +111,7 @@ const ECO3 = (props) => {
                     />
                 </View>
             </KeyboardAwareScrollView>
-        </ImageBackground>
+        </View>
 
     )
 }

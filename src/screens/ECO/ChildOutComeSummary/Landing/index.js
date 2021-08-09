@@ -1,32 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { ImageBackground, View, Dimensions } from 'react-native';
-import { Text, Cover, BackButton, Heading, InputDate, GridButton } from '../../../components';
-import { BACKGROUND_ONE_IMG } from '../../../../res/drawables';
-import { ECO_HEADING } from '../../../../res/strings';
-import { moveToScreen } from '../../../functions';
-import { Context as AuthContext } from '../../../store/context/AuthContext';
-import MessageModal from '../../../Modal/EcoMessage';
-
-const LandingECO = (props) => {
+import { Text as SimpleText, View, Image, Modal, Platform, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, Cover, GridButton } from '../../../../components';
+import { ECO_HEADING, ECO_TEXT } from '../../../../../res/strings';
+import { Context as AuthContext } from '../../../../store/context/AuthContext';
+import {  LIGHT_BLUE_COLOUR } from '../../../../../res/drawables';
+const LandingCOC = (props) => {
     const { state: auth } = useContext(AuthContext);
     const { user } = auth;
-    const [modalVisible, setModalVisible] = useState(false)
 
-    const onNextPressed = () => {
-        props.navigation.navigate('CocLanding')
+    const onEntryRating = () => {
+        props.navigation.navigate('EcoNew1')
     }
-    const onEcoRatingsPressed = () => {
-        props.navigation.navigate('EcoGenerateRatings1')
-
+    const onProgressRating = () => {
+        alert('Module under development!')
     }
-
     return (
         <View style={styles.container}>
             <Cover
-                showMessage={true}
                 navigation={props.navigation}
                 heading={ECO_HEADING}
-                onShowMessagePressed={() => setModalVisible(true)}
             />
             <View style={{ padding: 5 }}>
 
@@ -35,13 +27,13 @@ const LandingECO = (props) => {
 
                 <View style={styles.innerContainer}>
                     <GridButton
-                        text={'Complete Child Outcome Summary Form'}
-                        onPress={() => onNextPressed()}
+                        text={'Entry Rating'}
+                        onPress={() => onEntryRating()}
                     />
                     <GridButton
                         style={{ alignSelf: 'flex-end' }}
-                        text={'Generate ECO Ratings Only'}
-                        onPress={() => onEcoRatingsPressed()}
+                        text={'Progress Rating'}
+                        onPress={() => onProgressRating()}
                     />
                 </View>
 
@@ -56,10 +48,7 @@ const LandingECO = (props) => {
                     onPress={() => onNextPressed()}
                 />
             </View> */}
-            <MessageModal
-                modalVisible={modalVisible}
-                onClosePressed={() => setModalVisible(false)}
-            />
+            
         </View>
 
     )
@@ -74,6 +63,16 @@ const styles = {
     , text: {
         marginTop: 30,
         marginLeft: 20
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    modalInnerContainer: {
+        height: '70%',
+        margin: 10,
+        borderRadius: 20,
+        backgroundColor: LIGHT_BLUE_COLOUR
     }
 }
-export default LandingECO;
+export default LandingCOC;

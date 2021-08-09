@@ -1,17 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, Dimensions } from 'react-native';
-import { InputBox, Text, RoundButton, BackButton, Heading, OptionsText } from '../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { ECO_HEADING } from '../../../../../res/strings';
+import { InputBox, Text, RoundButton, Cover, Heading, OptionsText } from '../../../../../components';
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../../res/drawables';
+import { ECO_HEADING_NEW } from '../../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
-const ECO5 = (props) => {
-    const data = props.route.params;
+const ECO6 = (props) => {
+    const {data} = props.route.params;
     console.log(data)
 
-    const [Relation_Summary, setRelation_Summary] = useState(null)
-    const [Relation_Evidencedate, setRelation_Evidencedate] = useState(null)
-    const [Relation_Special, setRelation_Special] = useState(null)
+    const [Skills_Summary, setSkills_Summary] = useState(null)
+    const [Skills_Evidencedate, setSkills_Evidencedate] = useState(null)
+    const [Skills_Special, setSkills_Special] = useState(null)
 
     const [ageExpected, setAgeExpected] = useState(null)
     const [ageExpectedAllSettings, setAgeExpectedAllSetting] = useState(null)
@@ -95,50 +95,53 @@ const ECO5 = (props) => {
     }
 
     const onNextPressed = () => {
-        props.navigation.navigate('EcoNew6', {
-            ...data,
-            Relation_Summary,
-            Relation_Evidencedate,
-            Relation_Special,
-            PositiveSocial: calculateRating()
-        })
+        if (Skills_Summary && setSkills_Evidencedate && Skills_Summary && calculateRating()) {
+            props.navigation.navigate('EcoNew7', {
+                data: {
+                    ...data,
+                    Skills_Summary,
+                    Skills_Evidencedate,
+                    Skills_Special,
+                    Acquiranduse: calculateRating()
+                }
+            })
+        } else {
+            alert('Kindly enter data in all fields & calculate ratings!')
+        }
     }
 
     const scrollViewRef = useRef();
 
     return (
-        <ImageBackground style={{
+        <View style={{
             flex: 1,
-            justifyContent: 'space-between'
-        }} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{ECO_HEADING}</Heading>
-            </View>
+        }} >
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_NEW}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Text style={styles.title}>V. Outcome A: Positive Social Relationships</Text>
+                <Text style={styles.title}>VI. Outcome B: Acquire and Use Knowledge and Skills</Text>
                 <InputBox
-                    placeholder={"Summary of Evidence"}
+                    placeholder={"Summary of Evidence*"}
                     style={{ height: 80 }}
-                    value={Relation_Summary}
-                    onChangeText={(text) => setRelation_Summary(text)}
+                    value={Skills_Summary}
+                    onChangeText={(text) => setSkills_Summary(text)}
                 />
                 <InputBox
-                    placeholder={"Special Evidence"}
+                    placeholder={"Sources of Supporting Evidence*"}
                     style={{ height: 80 }}
-                    value={Relation_Evidencedate}
-                    onChangeText={(text) => setRelation_Evidencedate(text)}
+                    value={setSkills_Evidencedate}
+                    onChangeText={(text) => setSkills_Evidencedate(text)}
                 />
                 <InputBox
-                    placeholder={"Summary of Considerations"}
+                    placeholder={"Special Considerations*"}
                     style={{ height: 80 }}
-                    value={Relation_Special}
-                    onChangeText={(text) => setRelation_Special(text)}
+                    value={Skills_Special}
+                    onChangeText={(text) => setSkills_Special(text)}
                 />
                 <OptionsText
                     text={'Does the child ever function in ways that would be considered age-expected with regard to this outcome?'}
@@ -188,7 +191,6 @@ const ECO5 = (props) => {
                     /> : null}
 
                 {calculateRating() ? <Text>{`Rating is = ${calculateRating()}`}</Text> : null}
-
                 <InputBox
                     editable={false}
                     placeholder={""}
@@ -206,7 +208,8 @@ const ECO5 = (props) => {
                     />
                 </View>
             </KeyboardAwareScrollView>
-        </ImageBackground>
+
+        </View>
 
     )
 }
@@ -226,4 +229,4 @@ const styles = {
         marginTop: 20
     }
 }
-export default ECO5;
+export default ECO6;

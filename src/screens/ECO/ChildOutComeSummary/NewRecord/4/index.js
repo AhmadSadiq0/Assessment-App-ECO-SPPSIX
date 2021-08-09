@@ -1,42 +1,42 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, Dimensions } from 'react-native';
-import { Button, Text, RoundButton, BackButton, Heading, ButtonRadio } from '../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { ECO_HEADING } from '../../../../../res/strings';
+import { Button, Text, RoundButton, Cover, ButtonRadio } from '../../../../../components'
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../../res/drawables';
+import { ECO_HEADING_NEW } from '../../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 const ECO4 = (props) => {
-    const data = props.route.params;
+    const {data} = props.route.params;
     console.log(data)
 
     const [Parent_ID, setParent_ID] = useState(null);
+    console.log(data)
 
 
     const onNextPressed = () => {
-        props.navigation.navigate('EcoNew5',{
-            ...data, 
-            Parent_ID
+        props.navigation.navigate('EcoNew5', {
+            data: {
+                ...data,
+                Parent_ID
+            }
         })
     }
 
     const scrollViewRef = useRef();
 
     return (
-        <ImageBackground style={{
+        <View style={{
             flex: 1,
-            justifyContent: 'space-between'
-        }} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{ECO_HEADING}</Heading>
-            </View>
+        }} >
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_NEW}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-            <Text style={styles.title}>IV. How was Parent Involved in the Ratings?</Text>
+                <Text style={styles.title}>IV. How was Parent Involved in the Ratings?</Text>
                 <ButtonRadio
                     title={'Parent participated in meeting.'}
                     value={Parent_ID}
@@ -53,9 +53,9 @@ const ECO4 = (props) => {
                     title={'Parent Did Not Participate in Ratings Process'}
                     value={Parent_ID}
                     condition={3}
-                    onPress={() =>setParent_ID(3)}
+                    onPress={() => setParent_ID(3)}
                 />
-                 
+
             </KeyboardAwareScrollView>
             <View style={{
                 flexDirection: 'row',
@@ -67,7 +67,7 @@ const ECO4 = (props) => {
                     onPress={() => onNextPressed()}
                 />
             </View>
-        </ImageBackground>
+        </View>
 
     )
 }

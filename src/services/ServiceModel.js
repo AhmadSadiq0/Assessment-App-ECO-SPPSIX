@@ -1,4 +1,18 @@
 import axios from 'axios';
+export const postRequestWithNoResponseData = async (url, payload) => {
+    console.log('requestUrl ===> ', url)
+    console.log('requestPayload ===> ', payload)
+
+    try {
+        let res = await axios.post(url, payload);
+        console.log('requestResponse ===> ', res)
+        return { success: true};
+    } catch (e) {
+        console.log('requestError ===> ', e)
+        return { success: false };
+    }
+}
+
 
 export const postRequest = async (url, payload) => {
     console.log('requestUrl ===> ', url)

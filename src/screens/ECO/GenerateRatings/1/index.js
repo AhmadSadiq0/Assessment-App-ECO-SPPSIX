@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ImageBackground, View, Dimensions, ScrollView } from 'react-native';
-import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../../components';
+import { Input, Text, RoundButton, Cover, Heading, InputDate } from '../../../../components';
 import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { GENDER_VALUUES, GENERATE_RATINGS_HEADING } from '../../../../../res/strings';
+import { ECO_HEADING_RATINGS,GENDER_VALUUES} from '../../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { getDistricts } from '../../../../services/GeneralServices';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
@@ -59,13 +59,11 @@ const GenerateRatings1 = (props) => {
     }
 
     return (
-        <ImageBackground style={styles.container} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{GENERATE_RATINGS_HEADING}</Heading>
-            </View>
+        <View style={styles.container}>
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_RATINGS}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
@@ -131,7 +129,7 @@ const GenerateRatings1 = (props) => {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    marginTop:10
+                    marginTop: 10
                 }}>
                     <Text>Next</Text>
                     <RoundButton
@@ -140,15 +138,13 @@ const GenerateRatings1 = (props) => {
                 </View>
             </KeyboardAwareScrollView>
 
-        </ImageBackground>
+        </View>
 
     )
 }
 const styles = {
     container: {
         flex: 1,
-        justifyContent: 'space-between',
-        padding: 5
     }, innerContainer: {
         padding: 20
     }

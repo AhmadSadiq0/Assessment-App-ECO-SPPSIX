@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ImageBackground, View, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
-import { Input, Text, RoundButton, BackButton, Heading, Error } from '../../components';
+import { Input, Text, RoundButton, BackButton, Cover, Error } from '../../components';
 import { EMAIL_IMG, BLUE_COLOUR, BACKGROUND_ONE_IMG, PASSWORD_IMG } from '../../../res/drawables';
 import { Context as AuthContext } from '../../store/context/AuthContext';
 import { ECO, SPSIX } from '../../../res/strings';
@@ -24,11 +24,14 @@ const LoginScreen = (props) => {
         }
     }
     return (
-        <ImageBackground style={styles.container}
+        <View style={styles.container}
             source={BACKGROUND_ONE_IMG}>
-            <BackButton
-                onPress={() => props.navigation.goBack()}
+            <Cover
+                heading={'Login'}
+                navigation={props.navigation}
+               
             />
+        
             <View>
                 <Text style={styles.text}>Welcome Back!</Text>
                 <Input
@@ -50,23 +53,21 @@ const LoginScreen = (props) => {
 
             <View style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
+                justifyContent: 'center',
                 margin: 20
             }}>
-                <Text>Log In</Text>
+                {/* <Text>Log In</Text> */}
                 <RoundButton
                     onPress={() => onLoginPressed()}
                 />
             </View>
-        </ImageBackground>
+        </View>
 
     )
 }
 const styles = {
     container: {
         flex: 1,
-        justifyContent: 'space-between',
-        padding: 5
     }, text: {
         marginLeft: 20
     }

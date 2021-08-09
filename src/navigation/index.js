@@ -12,14 +12,16 @@ import SppsixLanding from '../screens/SPPSIX/Landing';
 import SppsixQuestionnaire from '../screens/SPPSIX/Questionnaire';
 
 import EcoLanding from '../screens/ECO/Landing';
-import EcoNew1 from '../screens/ECO/NewRecord/1';
-import EcoNew2 from '../screens/ECO/NewRecord/2';
-import EcoNew3 from '../screens/ECO/NewRecord/3';
-import EcoNew4 from '../screens/ECO/NewRecord/4';
-import EcoNew5 from '../screens/ECO/NewRecord/5';
-import EcoNew6 from '../screens/ECO/NewRecord/6';
-import EcoNew7 from '../screens/ECO/NewRecord/7';
-import EcoNew8 from '../screens/ECO/NewRecord/8';
+import COCLanding from '../screens/ECO/ChildOutComeSummary/Landing';
+
+import EcoNew1 from '../screens/ECO/ChildOutComeSummary/NewRecord/1';
+import EcoNew2 from '../screens/ECO/ChildOutComeSummary/NewRecord/2';
+import EcoNew3 from '../screens/ECO/ChildOutComeSummary/NewRecord/3';
+import EcoNew4 from '../screens/ECO/ChildOutComeSummary/NewRecord/4';
+import EcoNew5 from '../screens/ECO/ChildOutComeSummary/NewRecord/5';
+import EcoNew6 from '../screens/ECO/ChildOutComeSummary/NewRecord/6';
+import EcoNew7 from '../screens/ECO/ChildOutComeSummary/NewRecord/7';
+import EcoNew8 from '../screens/ECO/ChildOutComeSummary/NewRecord/8';
 
 
 import GenerateRatings1 from '../screens/ECO/GenerateRatings/1'
@@ -35,9 +37,9 @@ export default function App() {
                 <Stack.Screen name="Signup" component={SignupScreen} />
                 <Stack.Screen name="SppsixLanding" component={SppsixLanding} />
                 <Stack.Screen name="SppsixQuestionnaire" component={SppsixQuestionnaire} />
-               
+
                 <Stack.Screen name="EcoLanding" component={EcoLanding} />
-                
+                <Stack.Screen name="CocLanding" component={COCLanding} />
                 <Stack.Screen name="EcoNew1" component={EcoNew1} />
                 <Stack.Screen name="EcoNew2" component={EcoNew2} />
                 <Stack.Screen name="EcoNew3" component={EcoNew3} />

@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ImageBackground, View, Dimensions, ScrollView } from 'react-native';
-import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { GENDER_VALUUES, ECO_HEADING } from '../../../../../res/strings';
+import { Input, Text, RoundButton, BackButton, Cover, InputDate } from '../../../../../components';
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../../res/drawables';
+import { GENDER_VALUUES, ECO_HEADING_NEW } from '../../../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { getDistricts } from '../../../../services/GeneralServices';
+import { getDistricts } from '../../../../../services/GeneralServices';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import { checkDate } from '../../../../functions';
+import { checkDate } from '../../../../../functions';
 
 const LandingSppSix = (props) => {
     const [lastName, setLastName] = useState(null)
@@ -16,7 +16,7 @@ const LandingSppSix = (props) => {
     const [districtsList, setDistrictsList] = useState([])
     const [district, setDistrict] = useState(null)
     const [school, setSchool] = useState(null)
-    const [sisId, setSisId] = useState(null)
+    const [sisid, setSisId] = useState(null)
 
     const [open, setOpen] = useState(false);
     const [openDistrict, setOpenDistrict] = useState(false);
@@ -44,7 +44,9 @@ const LandingSppSix = (props) => {
                         DOB: dob,
                         District: district,
                         School: school,
-                        S_ID: sisId
+                        sisid,
+                        L_Name:lastName,
+                        F_Name:firstName
                     }
                 })
             } else {
@@ -59,13 +61,12 @@ const LandingSppSix = (props) => {
     }
 
     return (
-        <ImageBackground style={styles.container} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{ECO_HEADING}</Heading>
-            </View>
+        <View style={styles.container} >
+           
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_NEW}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
@@ -108,7 +109,7 @@ const LandingSppSix = (props) => {
                 />
                 <Input
                     placeholder={'SIS ID'}
-                    value={sisId}
+                    value={sisid}
                     onChangeText={text => setSisId(text)}
                 />
                 <DropDownPicker
@@ -131,7 +132,7 @@ const LandingSppSix = (props) => {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    marginTop:10
+                    marginTop: 10
                 }}>
                     <Text>Next</Text>
                     <RoundButton
@@ -140,15 +141,13 @@ const LandingSppSix = (props) => {
                 </View>
             </KeyboardAwareScrollView>
 
-        </ImageBackground>
+        </View>
 
     )
 }
 const styles = {
     container: {
         flex: 1,
-        justifyContent: 'space-between',
-        padding: 5
     }, innerContainer: {
         padding: 20
     }

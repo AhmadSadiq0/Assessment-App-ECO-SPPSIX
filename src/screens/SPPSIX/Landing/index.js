@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ImageBackground, View, Dimensions, KeyboardAvoidingView } from 'react-native';
-import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../components';
+import { Input, Text, RoundButton, BackButton, Heading, InputDate, Cover } from '../../../components';
 import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../res/drawables';
 import { GENDER_VALUUES } from '../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -14,6 +14,7 @@ const LandingSppSix = (props) => {
     const [dob, setDob] = useState(null)
     const [districtsList, setDistrictsList] = useState([])
     const [district, setDistrict] = useState(null)
+    const [sisId, setSisId] = useState(null)
 
     const [open, setOpen] = useState(false);
     const [openDistrict, setOpenDistrict] = useState(false);
@@ -32,14 +33,15 @@ const LandingSppSix = (props) => {
     }
     const onNextPressed = () => {
         console.log(bdateRef)
-        if (studentInitials && gender && dob && district) {
+        if (studentInitials && gender && dob && district && sisId) {
             if (checkDate(dob)) {
                 props.navigation.navigate('SppsixQuestionnaire', {
                     data: {
                         StudentInitial: studentInitials,
                         Gender: gender,
                         DOB: dob,
-                        District: district
+                        District: district,
+                        S_ID: sisId
                     }
                 })
             } else {
@@ -54,19 +56,18 @@ const LandingSppSix = (props) => {
     }
 
     return (
-        <ImageBackground style={{
+        <View style={{
             flex: 1,
-            justifyContent: 'space-between'
-        }} source={BACKGROUND_ONE_IMG}>
-            <BackButton
-                onPress={() => props.navigation.goBack()}
+        }} >
+            <Cover
+                navigation={props.navigation}
+                heading={'EE SPP 6 Decision Tree'}
             />
             <KeyboardAwareScrollView
                 behavior={'position'}
                 style={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Heading >{'EE SPP 6 \nDecision Tree'}</Heading>
                 <Input
                     placeholder={'Stundent Initials'}
                     value={studentInitials}
@@ -90,6 +91,11 @@ const LandingSppSix = (props) => {
                     value={dob}
                     onChangeText={(text, ref) => handleDob(text, ref)}
                 />
+                <Input
+                    placeholder={'SIS ID'}
+                    value={sisId}
+                    onChangeText={text => setSisId(text)}
+                />
                 <DropDownPicker
                     loading={!districtsList.length}
                     open={openDistrict}
@@ -106,6 +112,7 @@ const LandingSppSix = (props) => {
                     style={{ backgroundColor: BLUE_COLOUR }}
                     dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
                 />
+
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'center',
@@ -117,16 +124,16 @@ const LandingSppSix = (props) => {
                     />
                 </View>
             </KeyboardAwareScrollView>
-        </ImageBackground>
+        </View>
 
     )
 }
 const styles = {
     container: {
         flex: 1,
-        padding: 5
     }, innerContainer: {
-        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
     }
     , text: {
         marginTop: 30,

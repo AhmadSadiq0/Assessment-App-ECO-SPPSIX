@@ -1,13 +1,23 @@
-import React, { useState, useRef } from 'react';
-import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
-import { BackButton, Heading, Text, RoundButton, OptionsText, PrimaryButton } from '../../../components';
-import { BACKGROUND_ONE_IMG, } from '../../../../res/drawables';
+import React, { useState, useRef, useContext } from 'react';
+import { ImageBackground, View, ActivityIndicator } from 'react-native';
+import { BackButton, Cover, Text, RoundButton, OptionsText, PrimaryButton } from '../../../components';
+import { BACKGROUND_ONE_IMG, WHITE_COLOUR, BLUE_COLOUR } from '../../../../res/drawables';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
-
+import { CHILDHOOD_PROGRAMS } from '../../../../res/strings';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { CURRENT_DATE } from '../../../functions';
+import { Context as AuthContext } from '../../../store/context/AuthContext';
+import { createRecord } from '../../../services/SppsixServices';
 const Questionnaire = (props) => {
     const scrollViewRef = useRef();
+    const { state: auth } = useContext(AuthContext);
+    const { user } = auth;
+    const { data } = props.route.params;
+    console.log(data, props)
 
+    const [loading, setLoading] = useState(false)
+
+    const [ChildhoodProgram, setChildhoodProgram] = useState(null)
     //Case 1
     const [earlyChildhoodPrg, setEarlyChildhoodPrg] = useState(null)
     const [atleast10hoursPerWeek, setAtleast10hoursPerWeek] = useState(null)
@@ -65,8 +75,25 @@ const Questionnaire = (props) => {
         btnNum == 1 ? setHomeEduaction(true) : setHomeEduaction(false)
     }
 
-    const onSubmitPressed = () => {
-        alert('Submitted')
+    const onSubmitPressed = async () => {
+        if (getRating() && ChildhoodProgram) {
+            let payload = {
+                ...data,
+                ChildhoodProgram,
+                Rating: getRating(),
+                "Date": CURRENT_DATE(),
+                UserId: user.UserID
+            };
+            setLoading(true)
+            let res = await createRecord(payload)
+            if (res.success)
+                alert('Record created successfully.')
+            else
+                alert('Could not enter record to database, please try again!')
+            setLoading(false)
+        } else {
+            alert('Kindly generating ratings properly!')
+        }
     }
     const getRating = () => {
         if (earlyChildhoodPrg && atleast10hoursPerWeek) {
@@ -86,7 +113,7 @@ const Questionnaire = (props) => {
                 return 24
             } else if (specialEducationProgram && resdentialFacility) {
                 return 25
-            } if (specialEducationProgram==false && homeEducation) {
+            } if (specialEducationProgram == false && homeEducation) {
                 return 26
             } else if (specialEducationProgram == false && homeEducation == false) {
                 return 27
@@ -94,13 +121,15 @@ const Questionnaire = (props) => {
         }
         return null
     }
+    const [open, setOpen] = useState(false);
+
     return (
-        <ImageBackground style={styles.container}
+        <View style={styles.container}
             source={BACKGROUND_ONE_IMG}>
-            <BackButton
-                onPress={() => props.navigation.goBack()}
+            <Cover
+                navigation={props.navigation}
+                heading={'EE SPP 6 Decision Tree'}
             />
-            <Heading >{'EE SPP 6 \nDecision Tree'}</Heading>
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
@@ -111,11 +140,23 @@ const Questionnaire = (props) => {
                     title2={"No"}
                     onPress={(btnNum) => onEaryChildhoodProgramResponse(btnNum)}
                 />
+                {earlyChildhoodPrg ? <DropDownPicker
+                    open={open}
+                    value={ChildhoodProgram}
+                    items={CHILDHOOD_PROGRAMS}
+                    setOpen={setOpen}
+                    setValue={setChildhoodProgram}
+                    placeholder="Type Of Early Childhood"
+                    textStyle={{ color: WHITE_COLOUR }}
+                    style={{ backgroundColor: BLUE_COLOUR }}
+                    dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
+                /> : null}
                 {earlyChildhoodPrg ? <OptionsText
                     title1={"Atleast 10 hours \n per week"}
                     title2={"Less than 10 \n hours per week"}
                     onPress={(btnNum) => onHoursPerWeekResponse(btnNum)}
                 /> : null}
+
 
                 {(atleast10hoursPerWeek || lessthan10hoursPerWeek) && earlyChildhoodPrg ? <OptionsText
                     text={'Where does the child receive the majority of hours of special education and related services?'}
@@ -148,21 +189,20 @@ const Questionnaire = (props) => {
 
             </KeyboardAwareScrollView>
             {getRating() ? <Text>{`Rating is = ${getRating()}`}</Text> : null}
+            <ActivityIndicator animating={true} style={{ opacity: loading ? 1.0 : 0.0, margin: 5 }} color={BLUE_COLOUR} />
             <PrimaryButton
                 style={{ alignSelf: 'center' }}
                 title={'Submit'}
                 onPress={() => onSubmitPressed()}
             />
 
-        </ImageBackground>
+        </View>
 
     )
 }
 const styles = {
     container: {
-        flex: 1,
-        justifyContent: 'space-between',
-        padding: 5
+        flex: 1
     }, innerContainer: {
         flex: 1, padding: 20
     }, text: {

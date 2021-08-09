@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, Dimensions } from 'react-native';
-import { InputBox, Text, RoundButton, BackButton, Heading, OptionsText } from '../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { ECO_HEADING } from '../../../../../res/strings';
+import { InputBox, Text, RoundButton, Cover, OptionsText } from '../../../../../components';
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../../res/drawables';
+import { ECO_HEADING_NEW } from '../../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 const ECO7 = (props) => {
-    const data = props.route.params;
+    const {data} = props.route.params;
     console.log(data)
 
     const [Needs_Summary, setNeeds_Summary] = useState(null)
@@ -95,47 +95,50 @@ const ECO7 = (props) => {
     }
 
     const onNextPressed = () => {
-        props.navigation.navigate('EcoNew8', {
-            ...data,
-            Needs_Summary,
-            Needs_Evidencedate,
-            Needs_Special,
-            TakeAppropriate: calculateRating()
-        })
+        if (Needs_Summary && Needs_Evidencedate && Needs_Special && calculateRating()) {
+            props.navigation.navigate('EcoNew8', {
+                data: {
+                    ...data,
+                    Needs_Summary,
+                    Needs_Evidencedate,
+                    Needs_Special,
+                    TakeAppropriate: calculateRating()
+                }
+            })
+        } else {
+            alert('Kindly enter data in all fields & calculate ratings!')
+        }
     }
 
     const scrollViewRef = useRef();
 
     return (
-        <ImageBackground style={{
+        <View style={{
             flex: 1,
-            justifyContent: 'space-between'
-        }} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{ECO_HEADING}</Heading>
-            </View>
+        }} >
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_NEW}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
                 <Text style={styles.title}>VII. Outcome C: Take Appropriate Action to Meet Own Needs?</Text>
                 <InputBox
-                    placeholder={"Summary of Evidence"}
+                    placeholder={"Summary of Evidence*"}
                     style={{ height: 80 }}
                     value={Needs_Summary}
                     onChangeText={(text) => setNeeds_Summary(text)}
                 />
                 <InputBox
-                    placeholder={"Sources of Supporting Evidence"}
+                    placeholder={"Sources of Supporting Evidence*"}
                     style={{ height: 80 }}
                     value={Needs_Evidencedate}
                     onChangeText={(text) => setNeeds_Evidencedate(text)}
                 />
                 <InputBox
-                    placeholder={"Special Considerations"}
+                    placeholder={"Special Considerations*"}
                     style={{ height: 80 }}
                     value={Needs_Special}
                     onChangeText={(text) => setNeeds_Special(text)}
@@ -205,7 +208,7 @@ const ECO7 = (props) => {
                     />
                 </View>
             </KeyboardAwareScrollView>
-        </ImageBackground>
+        </View>
 
     )
 }

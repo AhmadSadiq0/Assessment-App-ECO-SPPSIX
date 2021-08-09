@@ -1,47 +1,56 @@
 import React, { useState, useRef, useContext } from 'react';
 import { ImageBackground, View, Dimensions, Button } from 'react-native';
-import { Input, Text, RoundButton, BackButton, Heading, InputDate } from '../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { ROLE_LISTINGS_SUMMARY, ECO_HEADING } from '../../../../../res/strings';
+import { Input, Text, RoundButton, Cover, Heading, InputDate } from '../../../../../components';
+import { ECO_HEADING_NEW } from '../../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import { Context as AuthContext } from '../../../../store/context/AuthContext';
-
-const ECO3 = (props) => {
+import { Context as AuthContext } from '../../../../../store/context/AuthContext';
+import { createRecord } from '../../../../../services/EcoToolServices';
+const ECO8 = (props) => {
     const { state: auth } = useContext(AuthContext);
     const { user } = auth;
     const [username, setUsername] = useState(user.Name)
-    const [date,setData] = useState(null)
+    const [date, setDate] = useState(null)
 
-    console.log(user)
-
+    const { data } = props.route.params;
     const scrollViewRef = useRef();
     const bdateRef = useRef();
-    const { data } = props.route.params;
-    console.log(props)
 
 
     const onNextPressed = () => {
 
     }
-    const onSubmitPressed = () => {
-        alert('Submitted')
+    const onSubmitPressed = async () => {
+        console.log(auth)
+        let obj = {
+            ...data,
+            status: 'Entry',
+            "Date": date,
+            User_ID: auth.user.UserID,
+            ExpirationDate: date,
+            S_ID:""
+        }
+        console.log(obj)
+        let res = await createRecord(obj)
+        console.log(res)
+        if (res.success)
+            alert('Submitted')
+        else
+            alert('Could not create record,please try again')
+
     }
     const handleDob = (text, ref) => {
-        setData(text)
+        setDate(text)
     }
 
 
     return (
-        <ImageBackground style={{
+        <View style={{
             flex: 1,
-            justifyContent: 'space-between'
-        }} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{ECO_HEADING}</Heading>
-            </View>
+        }} >
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_NEW}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
@@ -54,10 +63,10 @@ const ECO3 = (props) => {
                     value={username}
                     onChangeText={text => setUsername(text)}
                 />
-               
+
                 <InputDate
                     ref={bdateRef}
-                    placeholder={'Date  DD/MM/YYYY*'}
+                    placeholder={'Date  MM/DD/YYYY*'}
                     value={date}
                     onChangeText={(text, ref) => handleDob(text, ref)}
                 />
@@ -79,7 +88,7 @@ const ECO3 = (props) => {
                     onPress={() => onNextPressed()}
                 />
             </View>
-        </ImageBackground>
+        </View>
 
     )
 }
@@ -99,4 +108,4 @@ const styles = {
         marginTop: 20
     }
 }
-export default ECO3;
+export default ECO8;

@@ -1,46 +1,64 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, Dimensions } from 'react-native';
-import { Button, Text, RoundButton, BackButton, Heading, InputDate } from '../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { ECO_HEADING } from '../../../../../res/strings';
+import { Button, Text, RoundButton, Cover, Heading, InputDate } from '../../../../../components';
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../../res/drawables';
+import { ECO_HEADING_NEW, ROLE_LISTINGS } from '../../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 const ECO2 = (props) => {
-    const data = props.route.params.data;
+    const {data} = props.route.params;
     console.log(data)
-
     const [FamilyCaretaker, setFamilyCaretaker] = useState(0);
     const [CoordinatorLea, setCoordinatorLea] = useState(0);
     const [ChildhoodTeacherSpcl, setChildhoodTeacherSpcl] = useState(0);
     const [Psycologist, setPsycologist] = useState(0);
     const [Pathologist, setPathologist] = useState(0);
     const [ServiceProvider, setServiceProvider] = useState(0);
+    const getSelected = () => {
+        let slectedParticipants = [];
+        if (FamilyCaretaker)
+            slectedParticipants.push(ROLE_LISTINGS[0])
+        if (CoordinatorLea)
+            slectedParticipants.push(ROLE_LISTINGS[1])
+        if (ChildhoodTeacherSpcl)
+            slectedParticipants.push(ROLE_LISTINGS[2])
+        if (Psycologist)
+            slectedParticipants.push(ROLE_LISTINGS[3])
+        if (Pathologist)
+            slectedParticipants.push(ROLE_LISTINGS[4])
+        if (ServiceProvider)
+            slectedParticipants.push(ROLE_LISTINGS[5])
 
+        return slectedParticipants;
+    }
     const onNextPressed = () => {
-        props.navigation.navigate('EcoNew3',{
-            ...data, 
-            FamilyCaretaker,
-            CoordinatorLea,
-            ChildhoodTeacherSpcl,
-            Psycologist,
-            Pathologist,
-            ServiceProvider
-        })
+        if (getSelected().length >= 2) {
+            props.navigation.navigate('EcoNew3', {
+                data:{
+                ...data,
+                FamilyCaretaker,
+                CoordinatorLea,
+                ChildhoodTeacherSpcl,
+                Psycologist,
+                Pathologist,
+                ServiceProvider,
+                selectedParticipantsTypes: getSelected()
+            }})
+        } else {
+            alert('Select atleast 2 participants')
+        }
     }
 
     const scrollViewRef = useRef();
 
     return (
-        <ImageBackground style={{
+        <View style={{
             flex: 1,
-            justifyContent: 'space-between'
         }} source={BACKGROUND_ONE_IMG}>
-            <View>
-                <BackButton
-                    onPress={() => props.navigation.goBack()}
-                />
-                <Heading >{ECO_HEADING}</Heading>
-            </View>
+            <Cover
+                navigation={props.navigation}
+                heading={ECO_HEADING_NEW}
+            />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
@@ -87,9 +105,10 @@ const ECO2 = (props) => {
                     onPress={() => onNextPressed()}
                 />
             </View>
-        </ImageBackground>
+        </View>
 
     )
+
 }
 const styles = {
     container: {
