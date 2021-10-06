@@ -6,7 +6,7 @@ import { ECO_HEADING_NEW } from '../../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 const ECO7 = (props) => {
-    const {data} = props.route.params;
+    const { data } = props.route.params;
     console.log(data)
 
     const [Needs_Summary, setNeeds_Summary] = useState(null)
@@ -95,7 +95,7 @@ const ECO7 = (props) => {
     }
 
     const onNextPressed = () => {
-        if (Needs_Summary && Needs_Evidencedate && Needs_Special && calculateRating()) {
+        if (Needs_Summary && Needs_Evidencedate && calculateRating()) {
             props.navigation.navigate('EcoNew8', {
                 data: {
                     ...data,
@@ -138,20 +138,20 @@ const ECO7 = (props) => {
                     onChangeText={(text) => setNeeds_Evidencedate(text)}
                 />
                 <InputBox
-                    placeholder={"Special Considerations*"}
+                    placeholder={"Special Considerations"}
                     style={{ height: 80 }}
                     value={Needs_Special}
                     onChangeText={(text) => setNeeds_Special(text)}
                 />
                 <OptionsText
-                    text={'Does the child ever function in ways that would be considered age-expected with regard to this outcome?'}
+                    text={'Does the child function in ways that would be considered age-expected with regard to this outcome?'}
                     title1={"Yes"}
                     title2={"No"}
                     onPress={(btnNum) => onAgeExpected(btnNum)}
                 />
                 {ageExpected ?
                     <OptionsText
-                        text={'Is the child is functioning age-expected across all or almost all settings and situations?'}
+                        text={'Does the child function in the ways that would be considered age-expected across all or almost all settings and situations?'}
                         title1={"Yes"}
                         title2={"No"}
                         onPress={(btnNum) => onAgeExpectedAllSettings(btnNum)}
@@ -177,7 +177,7 @@ const ECO7 = (props) => {
                     <OptionsText
                         text={'To what extent is the child is functioning age-expected across settings and situations? '}
                         title1={"       Occasional use of \nage-expected\n skills;\n more\n behavior that \nis not age-expected"}
-                        title2={"Uses a mix of \nage-expected\n and not \nage-expected \nbehaviors \nand skills \nacross \nsettings and situations"}
+                        title2={"Uses a mix of \nage-expected\n and not \nage-expected \nbehaviors \nand skills \nacross \nsettings and \nsituations"}
                         onPress={(btnNum) => onWhatExtent(btnNum)}
                     /> :
                     null
@@ -186,7 +186,7 @@ const ECO7 = (props) => {
                     <OptionsText
                         text={'To what extent is the child using immediate foundational skills across settings and situations? *'}
                         title1={"       Occasional use of \n        immediate \n    foundational skills"}
-                        title2={"Uses immediate \nfoundational skills\n most or all of \nthe time across\n settings and situations"}
+                        title2={"Uses immediate \nfoundational skills\n most or all of \nthe time across\n settings and \nsituations"}
                         onPress={(btnNum) => onWhatExtentFoundationalSkill(btnNum)}
                     /> : null}
 

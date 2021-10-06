@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ImageBackground, View, Dimensions } from 'react-native';
 import { Text, Cover, BackButton, Heading, InputDate, GridButton } from '../../../components';
 import { BACKGROUND_ONE_IMG } from '../../../../res/drawables';
-import { ECO_HEADING } from '../../../../res/strings';
+import { ECO_HEADING, TOOL_SELECTION_HEADING, ECO_TEXT } from '../../../../res/strings';
 import { moveToScreen } from '../../../functions';
 import { Context as AuthContext } from '../../../store/context/AuthContext';
 import MessageModal from '../../../Modal/EcoMessage';
@@ -23,6 +23,7 @@ const LandingECO = (props) => {
     return (
         <View style={styles.container}>
             <Cover
+                style={{ height: 80 }}
                 showMessage={true}
                 navigation={props.navigation}
                 heading={ECO_HEADING}
@@ -31,7 +32,7 @@ const LandingECO = (props) => {
             <View style={{ padding: 5 }}>
 
                 <Text>{`Welcome ${user.Name}`}</Text>
-                <Text style={{ fontWeight: '300', marginBottom: 10 }} >Select the tool you would like to use:</Text>
+                <Text style={{ fontWeight: '300', marginBottom: 10 }} >{TOOL_SELECTION_HEADING}</Text>
 
                 <View style={styles.innerContainer}>
                     <GridButton
@@ -40,7 +41,7 @@ const LandingECO = (props) => {
                     />
                     <GridButton
                         style={{ alignSelf: 'flex-end' }}
-                        text={'Generate ECO Ratings Only'}
+                        text={'Child Outcomes Rating Only'}
                         onPress={() => onEcoRatingsPressed()}
                     />
                 </View>
@@ -58,6 +59,7 @@ const LandingECO = (props) => {
             </View> */}
             <MessageModal
                 modalVisible={modalVisible}
+                text={ECO_TEXT}
                 onClosePressed={() => setModalVisible(false)}
             />
         </View>

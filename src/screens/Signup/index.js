@@ -4,6 +4,7 @@ import { Input, Text, RoundButton, BackButton, Cover } from '../../components';
 import { EMAIL_IMG, PERSON_IMG, BACKGROUND_ONE_IMG, PASSWORD_IMG } from '../../../res/drawables';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { sigupRequest } from '../../services/LoginServices';
+import { moveToScreen } from '../../functions';
 const SignUpScreen = (props) => {
     const [firstName, setFirstName] = useState(null)
     const [lastName, setLastName] = useState(null)
@@ -13,9 +14,10 @@ const SignUpScreen = (props) => {
     const [confirmPassword, setConfirmPassword] = useState(null)
     const [phoneNumber, setPhoneNumber] = useState(null)
     const scrollViewRef = useRef();
+    const { tool } = props.route.params;
 
     const onSignupPressed = async () => {
-        if (firstName && lastName && username && email && password && confirmPassword && phoneNumber) {
+        if (firstName && lastName && username && email && password && confirmPassword) {
             if (password == confirmPassword) {
                 let res = await sigupRequest({
                     FirstName: firstName,
@@ -26,7 +28,13 @@ const SignUpScreen = (props) => {
                     ConfirmPassword: confirmPassword,
                     PhoneNo: phoneNumber
                 })
-                alert(res.data)
+                props.navigation.popToTop() ;
+                if (res.success) {
+                    alert(res.data + '. Enter Username and Password to login')
+                    tool == "SPSIX" ? moveToScreen(props.navigation, 'Login', { tool: 'SPSIX' }) : moveToScreen(props.navigation, 'Login', { tool: 'ECO' })
+                } else {
+                    alert(res.data)
+                }
             } else {
                 alert('Password does not match')
             }
@@ -82,12 +90,12 @@ const SignUpScreen = (props) => {
                     secureTextEntry={true}
                     onChangeText={text => setConfirmPassword(text)}
                 />
-                <Input
+                {/* <Input
                     icon={PASSWORD_IMG}
                     placeholder={'Your Phone#'}
                     value={phoneNumber}
                     onChangeText={text => setPhoneNumber(text)}
-                />
+                /> */}
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',

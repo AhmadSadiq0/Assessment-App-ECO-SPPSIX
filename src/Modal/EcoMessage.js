@@ -15,7 +15,7 @@ const MessageModal = (props) => {
                     <TouchableOpacity onPress={() => props.onClosePressed()}>
                         <Image
                             style={{
-                                margin:5,
+                                margin: 5,
                                 width: 25,
                                 height: 25,
                                 alignSelf: 'flex-end'
@@ -26,7 +26,7 @@ const MessageModal = (props) => {
                     <ScrollView>
                         <Text
                             style={{ color: BLUE_COLOUR, padding: 5 }}>{
-                                ECO_TEXT}
+                                props.text}
                         </Text>
                     </ScrollView>
                 </View>

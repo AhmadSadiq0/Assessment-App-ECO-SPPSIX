@@ -18,32 +18,38 @@ const ECO3 = (props) => {
     const scrollViewRef = useRef();
 
 
-    const {data} = props.route.params;
+    const { data } = props.route.params;
     const { selectedParticipantsTypes } = data;
     console.log(data)
 
     const onNextPressed = () => {
-        if ( users.length > 1) {
+        if (users.length > 1) {
             props.navigation.navigate('EcoNew4', {
-                data:{
-                ...data,
-                SummaryRating: users}
+                data: {
+                    ...data,
+                    SummaryRating: users
+                }
             })
         } else {
             alert('Add atleast two persons who participated!')
         }
     }
     const onAddPressed = () => {
-        if (lastName && firstName && middleName && role) {
+        if (lastName && firstName && role) {
             let array = [...users];
             let obj = {
                 lastname: lastName,
                 firstname: firstName,
-                middlename: middleName,
+                // middlename: middleName,
                 role: role
             }
             array.push(obj)
             setUsers(array)
+            setLastName(null)
+            setFirstName(null)
+            setRole(null)
+            setMiddleName(null)
+
         } else {
             alert('Kindly enter data in all fields!')
         }
@@ -62,7 +68,7 @@ const ECO3 = (props) => {
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Text style={styles.title}>III. Person(s) Involved in Deciding Summary Ratings</Text>
+                <Text style={styles.title}>III. Persons Involved in Deciding Summary Ratings</Text>
 
                 <Input
                     placeholder={'Last name*'}
@@ -74,11 +80,11 @@ const ECO3 = (props) => {
                     value={firstName}
                     onChangeText={text => setFirstName(text)}
                 />
-                <Input
-                    placeholder={'Middle name*'}
+                {/* <Input
+                    placeholder={'Middle name'}
                     value={middleName}
                     onChangeText={text => setMiddleName(text)}
-                />
+                /> */}
 
 
                 <DropDownPicker

@@ -1,17 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { ImageBackground, View, Dimensions } from 'react-native';
-import { InputBox, Text, RoundButton, Cover, Heading, OptionsText } from '../../../../../components';
-import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../../res/drawables';
-import { ECO_HEADING_NEW } from '../../../../../../res/strings';
+import { InputBox, Text, RoundButton, Cover, OptionsText } from '../../../../components';
+import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
+import { ECO_HEADING_RATINGS } from '../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
-const ECO6 = (props) => {
+const GenerateRatings4 = (props) => {
     const { data } = props.route.params;
     console.log(data)
 
-    const [Skills_Summary, setSkills_Summary] = useState(null)
-    const [Skills_Evidencedate, setSkills_Evidencedate] = useState(null)
-    const [Skills_Special, setSkills_Special] = useState(null)
 
     const [ageExpected, setAgeExpected] = useState(null)
     const [ageExpectedAllSettings, setAgeExpectedAllSetting] = useState(null)
@@ -95,18 +92,15 @@ const ECO6 = (props) => {
     }
 
     const onNextPressed = () => {
-        if (Skills_Summary && setSkills_Evidencedate && calculateRating()) {
-            props.navigation.navigate('EcoNew7', {
+        if (calculateRating()) {
+            props.navigation.navigate('EcoGenerateRatings4', {
                 data: {
                     ...data,
-                    Skills_Summary,
-                    Skills_Evidencedate,
-                    Skills_Special,
-                    Acquiranduse: calculateRating()
+                    TakeAppropriate: calculateRating()
                 }
             })
         } else {
-            alert('Kindly enter data in all fields & calculate ratings!')
+            alert('Kindly calculate ratings!')
         }
     }
 
@@ -118,31 +112,14 @@ const ECO6 = (props) => {
         }} >
             <Cover
                 navigation={props.navigation}
-                heading={ECO_HEADING_NEW}
+                heading={ECO_HEADING_RATINGS}
             />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Text style={styles.title}>VI. Outcome B: Acquire and Use Knowledge and Skills</Text>
-                <InputBox
-                    placeholder={"Summary of Evidence*"}
-                    style={{ height: 80 }}
-                    value={Skills_Summary}
-                    onChangeText={(text) => setSkills_Summary(text)}
-                />
-                <InputBox
-                    placeholder={"Sources of Supporting Evidence*"}
-                    style={{ height: 80 }}
-                    value={setSkills_Evidencedate}
-                    onChangeText={(text) => setSkills_Evidencedate(text)}
-                />
-                <InputBox
-                    placeholder={"Special Considerations"}
-                    style={{ height: 80 }}
-                    value={Skills_Special}
-                    onChangeText={(text) => setSkills_Special(text)}
-                />
+                <Text style={styles.title}>III. Outcome C: Take Appropriate Action to Meet Own Needs?</Text>
+
                 <OptionsText
                     text={'Does the child function in ways that would be considered age-expected with regard to this outcome?'}
                     title1={"Yes"}
@@ -176,7 +153,7 @@ const ECO6 = (props) => {
                 {ageExpected && ageExpectedAllSettings == false ?
                     <OptionsText
                         text={'To what extent is the child is functioning age-expected across settings and situations? '}
-                        title1={"       Occasional\n use of \nage-expected\n skills;\n more\n behavior that \nis not age-expected"}
+                        title1={"       Occasional use of \nage-expected\n skills;\n more\n behavior that \nis not age-expected"}
                         title2={"Uses a mix of \nage-expected\n and not \nage-expected \nbehaviors \nand skills \nacross \nsettings and \nsituations"}
                         onPress={(btnNum) => onWhatExtent(btnNum)}
                     /> :
@@ -208,7 +185,6 @@ const ECO6 = (props) => {
                     />
                 </View>
             </KeyboardAwareScrollView>
-
         </View>
 
     )
@@ -226,7 +202,10 @@ const styles = {
         marginLeft: 20
     }, title: {
         alignSelf: 'center',
-        marginTop: 20
+        fontWeight: '700',
+        fontSize: 12,
+        margin: 5
+
     }
 }
-export default ECO6;
+export default GenerateRatings4;

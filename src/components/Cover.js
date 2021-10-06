@@ -21,6 +21,7 @@ const Cover = (props) => {
             }}>
                 {props.heading ?
                     <Heading
+                        style={props.style}
                         showMessage={props.showMessage}
                         textStyle={props.textStyle}
                         onShowMessagePressed={() => props.onShowMessagePressed()}

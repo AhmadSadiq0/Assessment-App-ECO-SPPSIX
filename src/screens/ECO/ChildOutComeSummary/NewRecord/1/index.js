@@ -71,7 +71,7 @@ const LandingSppSix = (props) => {
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Text style={styles.title}>I.Child's Information</Text>
+                <Text style={styles.title}>I. Child's Information</Text>
 
                 <Input
                     placeholder={'Last name*'}
@@ -103,7 +103,7 @@ const LandingSppSix = (props) => {
                     onChangeText={(text, ref) => handleDob(text, ref)}
                 />
                 <Input
-                    placeholder={'School*'}
+                    placeholder={'School'}
                     value={school}
                     onChangeText={text => setSchool(text)}
                 />

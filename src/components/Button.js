@@ -22,8 +22,8 @@ const Button = (props) => {
             onPress={() => props.onPress()}
         >
             <Text style={props.value == 1 ?
-                { alignSelf: 'center', fontSize: 14, color: WHITE_COLOUR } :
-                { alignSelf: 'center', fontSize: 14 }}>{props.title}</Text>
+                { alignSelf: 'center', fontSize: 12, color: WHITE_COLOUR } :
+                { alignSelf: 'center', fontSize: 12 }}>{props.title}</Text>
         </TouchableOpacity>
     )
 }

@@ -1,65 +1,113 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ImageBackground, View, Dimensions, ScrollView } from 'react-native';
-import { Input, Text, RoundButton, Cover, Heading, InputDate } from '../../../../components';
+import React, { useState, useRef } from 'react';
+import { ImageBackground, View, Dimensions } from 'react-native';
+import { InputBox, Text, RoundButton, Cover, OptionsText } from '../../../../components';
 import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../../res/drawables';
-import { ECO_HEADING_RATINGS,GENDER_VALUUES} from '../../../../../res/strings';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { getDistricts } from '../../../../services/GeneralServices';
+import { ECO_HEADING_RATINGS } from '../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import { checkDate } from '../../../../functions';
 
-const GenerateRatings1 = (props) => {
-    const [lastName, setLastName] = useState(null)
-    const [firstName, setFirstName] = useState(null)
-    const [gender, setGender] = useState(null)
-    const [dob, setDob] = useState(null)
-    const [districtsList, setDistrictsList] = useState([])
-    const [district, setDistrict] = useState(null)
-    const [school, setSchool] = useState(null)
-    const [sisId, setSisId] = useState(null)
+const GenerateRatings2 = (props) => {
+    // const {data} = props.route.params;
+    // console.log(data)
 
-    const [open, setOpen] = useState(false);
-    const [openDistrict, setOpenDistrict] = useState(false);
-    const scrollViewRef = useRef();
-    const bdateRef = useRef();
+    const [ageExpected, setAgeExpected] = useState(null)
+    const [ageExpectedAllSettings, setAgeExpectedAllSetting] = useState(null)
+    const [whatExtent, setWhatExtent] = useState(null)
+    const [outComeArea, setOutComeArea] = useState(null)
+    const [immediateFoundationSkill, setImmediateFoundationSkill] = useState(null)
+    const [whatExtentFoundationalSkill, setwhatExtentFoundationalSkill] = useState(null)
 
-    useEffect(() => {
-        loadDistrict()
-    }, [])
-
-
-    async function loadDistrict() {
-        let res = await getDistricts();
-        if (res.success)
-            setDistrictsList(res.data)
-    }
-    const onNextPressed = () => {
-        console.log(bdateRef)
-        if (firstName && lastName && gender && dob && district) {
-            if (checkDate(dob)) {
-                props.navigation.navigate('EcoNew2', {
-                    data: {
-                        Name: firstName + ' ' + lastName,
-                        Gender: gender,
-                        DOB: dob,
-                        District: district,
-                        School: school,
-                        S_ID: sisId
-                    }
-                })
-            } else {
-                alert('Invalid date')
-            }
+    //true means option 1 false means option 2
+    const onAgeExpected = (btnNum) => {
+        if (btnNum == 1) {
+            setAgeExpected(true)
+            setAgeExpectedAllSetting(null)
+            setWhatExtent(null)
+            setOutComeArea(null)
+            setImmediateFoundationSkill(null)
         } else {
-            alert('Kindly enter data in all fields!')
+            setAgeExpected(false)
+            setAgeExpectedAllSetting(null)
+            setWhatExtent(null)
+            setOutComeArea(null)
+            setImmediateFoundationSkill(null)
         }
     }
-    const handleDob = (text, ref) => {
-        setDob(text)
+    const onAgeExpectedAllSettings = (btnNum) => {
+        btnNum == 1 ? setAgeExpectedAllSetting(true) : setAgeExpectedAllSetting(false)
+    }
+    const onOutcomeArea = (btnNum) => {
+        btnNum == 1 ? setOutComeArea(true) : setOutComeArea(false)
+    }
+    const onWhatExtent = (btnNum) => {
+        //true means option 1 false means option 2
+        btnNum == 1 ? setWhatExtent(true) : setWhatExtent(false)
+
+    }
+    const onImmediateFoundationalSkill = (btnNum) => {
+        btnNum == 1 ? setImmediateFoundationSkill(true) : setImmediateFoundationSkill(false)
+
+    }
+    const onWhatExtentFoundationalSkill = (btnNum) => {
+        btnNum == 1 ? setwhatExtentFoundationalSkill(true) : setwhatExtentFoundationalSkill(false)
+
+    }
+    const calculateRating = () => {
+        if (ageExpected && ageExpectedAllSettings && outComeArea) {
+            return 6
+        } else if (ageExpected && ageExpectedAllSettings && outComeArea === false) {
+            return 7
+        } else if (ageExpected && ageExpectedAllSettings === false && whatExtent) {
+            return 4
+        } else if (ageExpected && !ageExpectedAllSettings && whatExtent === false) {
+            return 5
+        }
+        // No case 
+        else if (ageExpected === false && immediateFoundationSkill === false) {
+            return 1
+        }
+        else if (ageExpected === false && immediateFoundationSkill && whatExtentFoundationalSkill) {
+            return 2
+        }
+        else if (ageExpected === false && immediateFoundationSkill && whatExtentFoundationalSkill === false) {
+            return 3
+        }
     }
 
+    const getSummary = (rating) => {
+        if (rating == 6)
+            return 'Between Somewhat and Completely'
+        else if (rating == 7)
+            return 'Completely'
+        else if (rating == 1)
+            return 'Not yet'
+        else if (rating == 4)
+            return 'Between Nearly and Somewhat'
+        else if (rating == 5)
+            return 'Somewhat'
+        else if (rating == 2)
+            return 'Between Not Yet and Nearly'
+        else if (rating == 3)
+            return 'Nearly'
+    }
+
+    const onNextPressed = () => {
+        if (calculateRating()) {
+            props.navigation.navigate('EcoGenerateRatings2', {
+                data: {
+                    PositiveSocial: calculateRating()
+                }
+            })
+        } else {
+            alert('Kindly calculate ratings!')
+        }
+    }
+
+    const scrollViewRef = useRef();
+
     return (
-        <View style={styles.container}>
+        <View style={{
+            flex: 1,
+        }} >
             <Cover
                 navigation={props.navigation}
                 heading={ECO_HEADING_RATINGS}
@@ -68,64 +116,63 @@ const GenerateRatings1 = (props) => {
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Text style={styles.title}>I.Child's Information</Text>
+                <Text style={styles.title}>I. Outcome A: Positive Social Relationships</Text>
 
-                <Input
-                    placeholder={'Last name*'}
-                    value={lastName}
-                    onChangeText={text => setLastName(text)}
+                <OptionsText
+                    text={'Does the child function in ways that would be considered age-expected with regard to this outcome?'}
+                    title1={"Yes"}
+                    title2={"No"}
+                    onPress={(btnNum) => onAgeExpected(btnNum)}
                 />
-                <Input
-                    placeholder={'First name*'}
-                    value={firstName}
-                    onChangeText={text => setFirstName(text)}
-                />
+                {ageExpected ?
+                    <OptionsText
+                        text={'Does the child function in the ways that would be considered age-expected across all or almost all settings and situations?'}
+                        title1={"Yes"}
+                        title2={"No"}
+                        onPress={(btnNum) => onAgeExpectedAllSettings(btnNum)}
+                    /> :
+                    null}
+                {ageExpected == false ?
+                    <OptionsText
+                        text={'Does the child use any immediate foundational skills related to this outcome upon which to build age-expected functioning across settings and situations?'}
+                        title1={"Yes"}
+                        title2={"No"}
+                        onPress={(btnNum) => onImmediateFoundationalSkill(btnNum)}
+                    /> :
+                    null}
+                {ageExpectedAllSettings ?
+                    <OptionsText
+                        text={'Does anyone have concerns about the child functioning with regard to the outcome area?'}
+                        title1={"Yes"}
+                        title2={"No"}
+                        onPress={(btnNum) => onOutcomeArea(btnNum)}
+                    /> :
+                    null}
+                {ageExpected && ageExpectedAllSettings == false ?
+                    <OptionsText
+                        text={'To what extent is the child is functioning age-expected across settings and situations? '}
+                        title1={"       Occasional use of \nage-expected\n skills;\n more\n behavior that \nis not age-expected"}
+                        title2={"Uses a mix of \nage-expected\n and not \nage-expected \nbehaviors \nand skills \nacross \nsettings and \nsituations"}
+                        onPress={(btnNum) => onWhatExtent(btnNum)}
+                    /> :
+                    null
+                }
+                {ageExpected == false && immediateFoundationSkill ?
+                    <OptionsText
+                        text={'To what extent is the child using immediate foundational skills across settings and situations? *'}
+                        title1={"       Occasional use of \n        immediate \n    foundational skills"}
+                        title2={"Uses immediate \nfoundational skills\n most or all of \nthe time across\n settings and \nsituations"}
+                        onPress={(btnNum) => onWhatExtentFoundationalSkill(btnNum)}
+                    /> : null}
 
+                {calculateRating() ? <Text>{`Rating is = ${calculateRating()}`}</Text> : null}
 
-                <DropDownPicker
-                    open={open}
-                    value={gender}
-                    items={GENDER_VALUUES}
-                    setOpen={setOpen}
-                    setValue={setGender}
-                    placeholder="Gender*"
-                    textStyle={{ color: WHITE_COLOUR }}
-                    style={{ backgroundColor: BLUE_COLOUR }}
-                    dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
+                <InputBox
+                    editable={false}
+                    placeholder={""}
+                    style={{ height: 40 }}
+                    value={getSummary(calculateRating())}
                 />
-                <InputDate
-                    ref={bdateRef}
-                    placeholder={'Date of birth MM/DD/YYYY*'}
-                    value={dob}
-                    onChangeText={(text, ref) => handleDob(text, ref)}
-                />
-                <Input
-                    placeholder={'School*'}
-                    value={school}
-                    onChangeText={text => setSchool(text)}
-                />
-                <Input
-                    placeholder={'SIS ID'}
-                    value={sisId}
-                    onChangeText={text => setSisId(text)}
-                />
-                <DropDownPicker
-                    loading={!districtsList.length}
-                    open={openDistrict}
-                    value={district}
-                    items={districtsList}
-                    setOpen={setOpenDistrict}
-                    setValue={setDistrict}
-                    placeholder="District*"
-                    listMode="SCROLLVIEW"
-                    scrollViewProps={{
-                        nestedScrollEnabled: true,
-                    }}
-                    textStyle={{ color: WHITE_COLOUR }}
-                    style={{ backgroundColor: BLUE_COLOUR, flex: 1 }}
-                    dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
-                />
-
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -137,7 +184,6 @@ const GenerateRatings1 = (props) => {
                     />
                 </View>
             </KeyboardAwareScrollView>
-
         </View>
 
     )
@@ -145,6 +191,8 @@ const GenerateRatings1 = (props) => {
 const styles = {
     container: {
         flex: 1,
+        justifyContent: 'space-between',
+        padding: 5
     }, innerContainer: {
         padding: 20
     }
@@ -153,7 +201,9 @@ const styles = {
         marginLeft: 20
     }, title: {
         alignSelf: 'center',
-        marginTop: 20
+        fontWeight: '700',
+        fontSize: 12,
+        margin: 5
     }
 }
-export default GenerateRatings1;
+export default GenerateRatings2;

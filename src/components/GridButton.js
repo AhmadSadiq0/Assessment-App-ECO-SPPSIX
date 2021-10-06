@@ -15,7 +15,7 @@ const GridButton = (props) => {
             }}
             onPress={() => props.onPress()}
         >
-            <Text style={{ color: '#ffffff' }}>{props.text}</Text>
+            <Text style={{ width:'100%',color: '#ffffff' }}>{props.text}</Text>
             <Image style={{
                 width: 30, height: 30,
                 alignSelf: 'flex-end', margin: 5,

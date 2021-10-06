@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ImageBackground, View, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Input, Text, RoundButton, BackButton, Heading, InputDate, Cover } from '../../../components';
 import { BACKGROUND_ONE_IMG, BLUE_COLOUR, WHITE_COLOUR } from '../../../../res/drawables';
-import { GENDER_VALUUES } from '../../../../res/strings';
+import { GENDER_VALUUES, SPPS_SIX_HEADING } from '../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { getDistricts } from '../../../services/GeneralServices';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -33,7 +33,7 @@ const LandingSppSix = (props) => {
     }
     const onNextPressed = () => {
         console.log(bdateRef)
-        if (studentInitials && gender && dob && district && sisId) {
+        if (studentInitials && gender && dob && district) {
             if (checkDate(dob)) {
                 props.navigation.navigate('SppsixQuestionnaire', {
                     data: {
@@ -61,7 +61,7 @@ const LandingSppSix = (props) => {
         }} >
             <Cover
                 navigation={props.navigation}
-                heading={'EE SPP 6 Decision Tree'}
+                heading={SPPS_SIX_HEADING}
             />
             <KeyboardAwareScrollView
                 behavior={'position'}
@@ -69,25 +69,24 @@ const LandingSppSix = (props) => {
                 ref={scrollViewRef}
             >
                 <Input
-                    placeholder={'Stundent Initials'}
+                    placeholder={'Student Initials*'}
                     value={studentInitials}
                     onChangeText={text => setStudentInitials(text)}
                 />
-
-                <DropDownPicker
-                    open={open}
-                    value={gender}
-                    items={GENDER_VALUUES}
-                    setOpen={setOpen}
-                    setValue={setGender}
-                    placeholder="Gender"
-                    textStyle={{ color: WHITE_COLOUR }}
-                    style={{ backgroundColor: BLUE_COLOUR }}
-                    dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
-                />
+                    <DropDownPicker
+                        open={open}
+                        value={gender}
+                        items={GENDER_VALUUES}
+                        setOpen={setOpen}
+                        setValue={setGender}
+                        placeholder="Gender*"
+                        textStyle={{ color: WHITE_COLOUR}}
+                        style={{ backgroundColor: BLUE_COLOUR }}
+                        dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR}}
+                    />
                 <InputDate
                     ref={bdateRef}
-                    placeholder={'Date of birth MM/DD/YYYY'}
+                    placeholder={'Date of birth MM/DD/YYYY*'}
                     value={dob}
                     onChangeText={(text, ref) => handleDob(text, ref)}
                 />
@@ -103,7 +102,7 @@ const LandingSppSix = (props) => {
                     items={districtsList}
                     setOpen={setOpenDistrict}
                     setValue={setDistrict}
-                    placeholder="District"
+                    placeholder="District*"
                     listMode="SCROLLVIEW"
                     scrollViewProps={{
                         nestedScrollEnabled: true,

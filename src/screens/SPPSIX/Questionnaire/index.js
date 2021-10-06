@@ -3,19 +3,23 @@ import { ImageBackground, View, ActivityIndicator } from 'react-native';
 import { BackButton, Cover, Text, RoundButton, OptionsText, PrimaryButton } from '../../../components';
 import { BACKGROUND_ONE_IMG, WHITE_COLOUR, BLUE_COLOUR } from '../../../../res/drawables';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import { CHILDHOOD_PROGRAMS } from '../../../../res/strings';
+import { CHILDHOOD_PROGRAMS, SPPS_SIX_HEADING, SPPSIX_TEXT } from '../../../../res/strings';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CURRENT_DATE } from '../../../functions';
 import { Context as AuthContext } from '../../../store/context/AuthContext';
 import { createRecord } from '../../../services/SppsixServices';
+import MessageModal from '../../../Modal/EcoMessage';
+
 const Questionnaire = (props) => {
     const scrollViewRef = useRef();
     const { state: auth } = useContext(AuthContext);
     const { user } = auth;
     const { data } = props.route.params;
     console.log(data, props)
+    const [modalVisible, setModalVisible] = useState(false)
 
     const [loading, setLoading] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
     const [ChildhoodProgram, setChildhoodProgram] = useState(null)
     //Case 1
@@ -76,23 +80,31 @@ const Questionnaire = (props) => {
     }
 
     const onSubmitPressed = async () => {
-        if (getRating() && ChildhoodProgram) {
-            let payload = {
-                ...data,
-                ChildhoodProgram,
-                Rating: getRating(),
-                "Date": CURRENT_DATE(),
-                UserId: user.UserID
-            };
-            setLoading(true)
-            let res = await createRecord(payload)
-            if (res.success)
-                alert('Record created successfully.')
-            else
-                alert('Could not enter record to database, please try again!')
-            setLoading(false)
+        if (!isSubmitted) {
+            if (getRating()) {
+                let payload = {
+                    ...data,
+                    ChildhoodProgram,
+                    Rating: getRating(),
+                    "Date": CURRENT_DATE(),
+                    UserId: user.UserID
+                };
+                setLoading(true)
+                let res = await createRecord(payload)
+                if (res.success) {
+                    setIsSubmitted(true)
+                    alert('Thank you! Your code has been successfully recorded')
+                }
+                else
+                    alert('Could not enter record to database, please try again!')
+                setLoading(false)
+            } else {
+                alert('Code not generated, please add data')
+            }
         } else {
-            alert('Kindly generating ratings properly!')
+            props.navigation.goBack();
+            props.navigation.goBack();
+            props.navigation.goBack();
         }
     }
     const getRating = () => {
@@ -116,7 +128,7 @@ const Questionnaire = (props) => {
             } if (specialEducationProgram == false && homeEducation) {
                 return 26
             } else if (specialEducationProgram == false && homeEducation == false) {
-                return 27
+                return 27 + ' Service Provider Location'
             }
         }
         return null
@@ -128,17 +140,19 @@ const Questionnaire = (props) => {
             source={BACKGROUND_ONE_IMG}>
             <Cover
                 navigation={props.navigation}
-                heading={'EE SPP 6 Decision Tree'}
+                heading={SPPS_SIX_HEADING}
             />
             <KeyboardAwareScrollView
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
                 <OptionsText
-                    text={'Does the child attend regular early childhood program?'}
+                    showExclamation={true}
+                    text={'Is the child enrolled in a regular early childhood program?'}
                     title1={"Yes"}
                     title2={"No"}
                     onPress={(btnNum) => onEaryChildhoodProgramResponse(btnNum)}
+                    onExclamationPressed={() => setModalVisible(true)}
                 />
                 {earlyChildhoodPrg ? <DropDownPicker
                     open={open}
@@ -152,16 +166,16 @@ const Questionnaire = (props) => {
                     dropDownContainerStyle={{ backgroundColor: BLUE_COLOUR }}
                 /> : null}
                 {earlyChildhoodPrg ? <OptionsText
-                    title1={"Atleast 10 hours \n per week"}
-                    title2={"Less than 10 \n hours per week"}
+                    title1={"At least \n 10 hours \n per week"}
+                    title2={"Less than\n 10 hours\n per week"}
                     onPress={(btnNum) => onHoursPerWeekResponse(btnNum)}
                 /> : null}
 
 
                 {(atleast10hoursPerWeek || lessthan10hoursPerWeek) && earlyChildhoodPrg ? <OptionsText
                     text={'Where does the child receive the majority of hours of special education and related services?'}
-                    title1={"In the regular early \n childhood program"}
-                    title2={"In someother \n location"}
+                    title1={"In the \nregular early \n childhood program"}
+                    title2={"In some other \n location"}
                     onPress={(btnNum) => onMajorityHoursEducationAndServicesResponse(btnNum)}
                 /> : null}
                 {earlyChildhoodPrg == false ?
@@ -188,14 +202,18 @@ const Questionnaire = (props) => {
                     /> : null}
 
             </KeyboardAwareScrollView>
-            {getRating() ? <Text>{`Rating is = ${getRating()}`}</Text> : null}
+            {getRating() ? <Text style={{ margin: 5 }}>{`EE Code = ${getRating()}`}</Text> : null}
             <ActivityIndicator animating={true} style={{ opacity: loading ? 1.0 : 0.0, margin: 5 }} color={BLUE_COLOUR} />
             <PrimaryButton
                 style={{ alignSelf: 'center' }}
-                title={'Submit'}
+                title={!isSubmitted ? 'Submit' : 'Go to home'}
                 onPress={() => onSubmitPressed()}
             />
-
+            <MessageModal
+                modalVisible={modalVisible}
+                text={SPPSIX_TEXT}
+                onClosePressed={() => setModalVisible(false)}
+            />
         </View>
 
     )

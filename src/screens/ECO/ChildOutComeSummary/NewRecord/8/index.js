@@ -1,15 +1,17 @@
 import React, { useState, useRef, useContext } from 'react';
 import { ImageBackground, View, Dimensions, Button } from 'react-native';
-import { Input, Text, RoundButton, Cover, Heading, InputDate } from '../../../../../components';
+import { Input, Text, RoundButton, Cover, Heading, InputDate, PrimaryButton } from '../../../../../components';
 import { ECO_HEADING_NEW } from '../../../../../../res/strings';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { Context as AuthContext } from '../../../../../store/context/AuthContext';
 import { createRecord } from '../../../../../services/EcoToolServices';
+import { GET_CURRENT_DATE } from '../../../../../functions';
 const ECO8 = (props) => {
     const { state: auth } = useContext(AuthContext);
     const { user } = auth;
     const [username, setUsername] = useState(user.Name)
-    const [date, setDate] = useState(null)
+    const [date, setDate] = useState(GET_CURRENT_DATE())
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
     const { data } = props.route.params;
     const scrollViewRef = useRef();
@@ -21,21 +23,34 @@ const ECO8 = (props) => {
     }
     const onSubmitPressed = async () => {
         console.log(auth)
-        let obj = {
-            ...data,
-            status: 'Entry',
-            "Date": date,
-            User_ID: auth.user.UserID,
-            ExpirationDate: date,
-            S_ID:""
+        if (!isSubmitted) {
+            let obj = {
+                ...data,
+                status: 'Entry',
+                "Date": date,
+                User_ID: auth.user.UserID,
+                ExpirationDate: date,
+                S_ID: ""
+            }
+            console.log(obj)
+            let res = await createRecord(obj)
+            console.log(res)
+            if (res.success) {
+                setIsSubmitted(true)
+                alert('Thank you,Records have been saved in database')
+            }
+            else
+                alert('Could not create record,please try again')
+        } else {
+            props.navigation.goBack();
+            props.navigation.goBack();
+            props.navigation.goBack();
+            props.navigation.goBack();
+            props.navigation.goBack();
+            props.navigation.goBack();
+            props.navigation.goBack();
+            props.navigation.goBack();
         }
-        console.log(obj)
-        let res = await createRecord(obj)
-        console.log(res)
-        if (res.success)
-            alert('Submitted')
-        else
-            alert('Could not create record,please try again')
 
     }
     const handleDob = (text, ref) => {
@@ -65,20 +80,22 @@ const ECO8 = (props) => {
                 />
 
                 <InputDate
+                    editable={false}
                     ref={bdateRef}
                     placeholder={'Date  MM/DD/YYYY*'}
                     value={date}
                     onChangeText={(text, ref) => handleDob(text, ref)}
                 />
 
-                <Button
-                    title={'Submit'}
+                <PrimaryButton
+                    style={{ alignSelf: 'center' }}
+                    title={!isSubmitted ? 'Submit' : 'Go to home'}
                     onPress={() => onSubmitPressed()}
                 />
 
 
             </KeyboardAwareScrollView>
-            <View style={{
+            {/* <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 margin: 20
@@ -87,7 +104,7 @@ const ECO8 = (props) => {
                 <RoundButton
                     onPress={() => onNextPressed()}
                 />
-            </View>
+            </View> */}
         </View>
 
     )

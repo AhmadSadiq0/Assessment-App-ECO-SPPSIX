@@ -7,3 +7,6 @@ export const CREATE_SPPSIX_ENTRY = '/Transactions/SaveStudentInfo';
 
 //ECOTOOL API'S
 export const CREATE_ECO_ENTRY = '/Transactions/SaveUserData';
+
+//Forget password
+export const FORGET_PASSWORD = '/UserLookUps/GetForgotPwd?UserName='

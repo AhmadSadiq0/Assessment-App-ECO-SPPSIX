@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Text as SimpleText, View, Image, Modal, Platform, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { Text, Cover, GridButton } from '../../../../components';
-import { ECO_HEADING, ECO_TEXT } from '../../../../../res/strings';
+import { ECO_HEADING, TOOL_SELECTION_HEADING } from '../../../../../res/strings';
 import { Context as AuthContext } from '../../../../store/context/AuthContext';
-import {  LIGHT_BLUE_COLOUR } from '../../../../../res/drawables';
+import { LIGHT_BLUE_COLOUR } from '../../../../../res/drawables';
 const LandingCOC = (props) => {
     const { state: auth } = useContext(AuthContext);
     const { user } = auth;
@@ -23,16 +23,16 @@ const LandingCOC = (props) => {
             <View style={{ padding: 5 }}>
 
                 <Text>{`Welcome ${user.Name}`}</Text>
-                <Text style={{ fontWeight: '300', marginBottom: 10 }} >Select the tool you would like to use:</Text>
+                <Text style={{ fontWeight: '300', marginBottom: 10 }} >{TOOL_SELECTION_HEADING}</Text>
 
                 <View style={styles.innerContainer}>
                     <GridButton
-                        text={'Entry Rating'}
+                        text={'Child Outcome Summary Entry'}
                         onPress={() => onEntryRating()}
                     />
                     <GridButton
                         style={{ alignSelf: 'flex-end' }}
-                        text={'Progress Rating'}
+                        text={'Child Outcome Summary Progress'}
                         onPress={() => onProgressRating()}
                     />
                 </View>
@@ -48,7 +48,7 @@ const LandingCOC = (props) => {
                     onPress={() => onNextPressed()}
                 />
             </View> */}
-            
+
         </View>
 
     )

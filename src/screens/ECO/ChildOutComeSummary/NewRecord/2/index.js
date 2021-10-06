@@ -63,7 +63,7 @@ const ECO2 = (props) => {
                 contentContainerStyle={styles.innerContainer}
                 ref={scrollViewRef}
             >
-                <Text style={styles.title}>II. Indicate who participated in the Ratings</Text>
+                <Text style={styles.title}>II. Indicate who participated in the ratings</Text>
                 <Button
                     title={'Family/Caretaker'}
                     value={FamilyCaretaker}

@@ -14,7 +14,8 @@ import Button from './Button';
 import ButtonRadio from './ButtonRadio';
 import List from './List';
 import InputBox from './inputBox';
-
+import NumberBox from './NumberBox';
+import ClickableText from './ClickableText';
 
 export {
     PrimaryButton,
@@ -32,5 +33,7 @@ export {
     Button,
     List,
     ButtonRadio,
-    InputBox
+    InputBox,
+    NumberBox,
+    ClickableText
 }

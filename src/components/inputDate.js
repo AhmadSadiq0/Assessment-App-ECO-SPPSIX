@@ -1,10 +1,10 @@
-import React,{useRef} from 'react';
+import React, { useRef } from 'react';
 import { View, TextInput, Image, Platform } from 'react-native';
 import { BLUE_COLOUR } from '../../res/drawables';
 import { TextInputMask } from 'react-native-masked-text';
 
 const InputDate = (props) => {
-    const ref=useRef() ;
+    const ref = useRef();
     return (
         <View style={{
             flexDirection: 'row',
@@ -15,6 +15,7 @@ const InputDate = (props) => {
 
             <Image style={{ height: 20, width: 20 }} resizeMode={"contain"} source={props.icon} />
             <TextInputMask
+                editable={props.editable}
                 ref={ref}
                 style={
                     Platform.OS == 'ios' ?
@@ -27,9 +28,9 @@ const InputDate = (props) => {
                 }}
                 placeholder={props.placeholder}
                 placeholderTextColor={BLUE_COLOUR}
-                onChangeText={text => props.onChangeText(text,ref)}
+                onChangeText={text => props.onChangeText(text, ref)}
                 value={props.value}
-                
+
             />
         </View>
 

@@ -17,3 +17,4 @@ export const PERSON_IMG = require(`${PATH}/person.png`);
 export const BACK_IMG = require(`${PATH}/Back.png`);
 export const COVER_IMG = require(`${PATH}/cover.png`);
 export const CLOSE_IMG = require(`${PATH}/close.png`);
+export const EXCLAMARION_BLUE_IMG = require(`${PATH}/exclamation_blue.png`);

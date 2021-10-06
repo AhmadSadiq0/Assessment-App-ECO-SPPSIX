@@ -10,7 +10,6 @@ const ToogleButton = (props) => {
             flexDirection: 'row',
             borderColor: BLUE_COLOUR,
             backgroundColor: 'rgba(255,255,255,0.7)',
-            width: 300,
             borderRadius: 10,
             justifyContent: 'center'
         }}>

@@ -8,8 +8,8 @@ const Heading = (props) => {
         <View
             style={{
                 height: 60,
-                alignSelf: 'center',
                 width: '90%',
+                alignSelf: 'center',
                 ...props.style,
                 backgroundColor:
                     BLUE_COLOUR,
@@ -17,7 +17,7 @@ const Heading = (props) => {
                 padding: 5
             }}
         >
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{  justifyContent: 'center' }}>
                 <Text style={{
                     color: WHITE_COLOUR,
                     fontSize: 17,
@@ -28,7 +28,7 @@ const Heading = (props) => {
                     {props.children}
                 </Text>
                 {props.showMessage ? <TouchableOpacity onPress={() => props.onShowMessagePressed()}>
-                    <Image style={{ width: 30, height: 30 }}
+                    <Image style={{ width: 30, height: 30,alignSelf:'flex-end' }}
                         source={require('../../assets/images/exclamation_mark.png')} />
                 </TouchableOpacity> : null}
             </View>

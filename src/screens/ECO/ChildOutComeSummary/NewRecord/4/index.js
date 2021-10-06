@@ -50,7 +50,7 @@ const ECO4 = (props) => {
                     onPress={() => setParent_ID(2)}
                 />
                 <ButtonRadio
-                    title={'Parent Did Not Participate in Ratings Process'}
+                    title={'Parent did not participate in ratings process.'}
                     value={Parent_ID}
                     condition={3}
                     onPress={() => setParent_ID(3)}

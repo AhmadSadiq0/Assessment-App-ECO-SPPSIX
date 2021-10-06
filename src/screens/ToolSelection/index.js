@@ -1,7 +1,7 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import { ImageBackground, View, KeyboardAvoidingView } from 'react-native';
 import { BACKGROUND_ONE_IMG } from '../../../res/drawables';
-import { EC_SPPSIX, ECO_TOOL } from '../../../res/strings';
+import { EC_SPPSIX, ECO_TOOL, TOOL_SELECTION_HEADING } from '../../../res/strings';
 import { GridButton, Text, BackButton, Cover } from '../../components';
 import { _storeBaseUrl } from '../../localStorage';
 import { moveToScreen } from '../../functions';
@@ -13,12 +13,12 @@ const ToolSelectionScreen = (props) => {
     const { clearAuth } = useContext(AuthContext);
 
     const onEcoPressed = () => {
-        clearAuth()
+        // clearAuth()
         _storeBaseUrl(ECO_TOOL)
         type == 'Login' ? moveToScreen(navigation, 'Login', { tool: 'ECO' }) : moveToScreen(navigation, 'Signup', { tool: 'ECO' })
     }
     const onSppsixPressed = () => {
-        clearAuth()
+        // clearAuth()
         _storeBaseUrl(EC_SPPSIX)
         type == 'Login' ? moveToScreen(navigation, 'Login', { tool: 'SPSIX' }) : moveToScreen(navigation, 'Signup', { tool: 'SPSIX' })
     }
@@ -29,9 +29,9 @@ const ToolSelectionScreen = (props) => {
             <Cover
                 navigation={props.navigation}
             />
-        
+
             <View style={styles.innerContainer}>
-                <Text style={{ fontWeight: '300', marginBottom: 10 }} >Select the tool you would like to use:</Text>
+                <Text style={{ fontWeight: '300', marginBottom: 10 }} >{TOOL_SELECTION_HEADING}</Text>
                 <View>
                     <GridButton
                         text={'Preschool Environments Decision Tree for Coding'}
@@ -53,7 +53,7 @@ const styles = {
     container: {
         flex: 1,
     }, innerContainer: {
-        padding:5
+        padding: 5
     }
 }
 export default ToolSelectionScreen;
